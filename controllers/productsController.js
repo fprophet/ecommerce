@@ -3,10 +3,10 @@ const Product = require("../models/products");
 const model = require("../models/products");
 
 const productsController = {
-  create: async (req, res) => {
+  create: async (req, res, next) => {
     if (!req.body.name || !req.body.quantity) {
       res.send({ message: "Fill all fields", status: "success" });
-      res.send();
+      return next();
     }
 
     const found = await Product.findOne({ name: req.body.name });
@@ -15,7 +15,7 @@ const productsController = {
         message: "Product with this name already exists!",
         status: "failed",
       });
-      next();
+      return next();
     }
 
     const product = new Product();
