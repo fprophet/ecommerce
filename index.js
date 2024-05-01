@@ -11,7 +11,10 @@ mongoose.connection.close();
 const url = "mongodb://localhost:27017";
 const client = new MongoClient(url);
 
+const productsRouter = require("./routes/products");
 var path = require("path");
+
+app.use("/products", productsRouter);
 
 app.get("/", function (req, res) {
   res.render("index");
