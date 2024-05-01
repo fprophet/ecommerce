@@ -1,10 +1,19 @@
+const Product = require("../models/products");
+const model = require("../models/products");
+
 const productsController = {
-  create: (req, res) => {
-    console.log("I'm here");
+  create: async (req, res) => {
+    const product = new Product();
+    product.name = "First product";
+    product.quantity = 23;
+    await product.save();
+    res.send();
   },
 
-  productsView: (req, res) => {
-    res.render("../views/products");
+  productsView: async (req, res) => {
+    const products = await Product.find({});
+    console.log(products);
+    res.render("../views/products", { products: products });
   },
 };
 

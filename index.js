@@ -1,15 +1,12 @@
 const express = require("express");
 const app = express();
-const { MongoClient } = require("mongodb");
 const mongoose = require("mongoose");
 
 mongoose
-  .connect("mongodb://127.0.0.1:27017")
+  .connect("mongodb://127.0.0.1:27017/ecommerce")
   .then(() => console.log("Connected!"));
 
-mongoose.connection.close();
-const url = "mongodb://localhost:27017";
-const client = new MongoClient(url);
+// mongoose.connection.close();
 
 const productsRouter = require("./routes/products");
 var path = require("path");
