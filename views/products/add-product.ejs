@@ -9,14 +9,22 @@
     form {
       padding: 20px;
     }
+    .input-group {
+      margin: 10px;
+    }
   </style>
   <body>
     <%- include("../partials/header.ejs") -%>
-    <form>
-      <div>
-        <label for="porduct-name">Product Name</label>
-        <input type="text" name="porduct-name" id="porduct-name" />
+    <form action="/products/create" method="POST">
+      <div class="input-group">
+        <label for="name">Product Name</label>
+        <input required type="text" name="name" id="name" />
       </div>
+      <div class="input-group">
+        <label for="quantity">Quantity</label>
+        <input required type="text" name="quantity" id="quantity" />
+      </div>
+      <input type="submit" value="Create product" />
     </form>
     <%- include("../partials/footer.ejs") -%>
   </body>

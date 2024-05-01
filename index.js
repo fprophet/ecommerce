@@ -11,6 +11,9 @@ mongoose
 const productsRouter = require("./routes/products");
 var path = require("path");
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
 app.use("/products", productsRouter);
 
 app.get("/", function (req, res) {
