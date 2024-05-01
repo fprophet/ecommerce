@@ -5,8 +5,17 @@ const model = require("../models/products");
 const productsController = {
   create: async (req, res) => {
     if (!req.body.name || !req.body.quantity) {
-      //   res.redirect("/");
+      res.send({ message: "Fill all fields", status: "success" });
       res.send();
+    }
+
+    const found = await Product.findOne({ name: req.body.name });
+    if (found) {
+      res.send({
+        message: "Product with this name already exists!",
+        status: "failed",
+      });
+      next();
     }
 
     const product = new Product();
@@ -14,12 +23,11 @@ const productsController = {
     product.name = req.body.name;
 
     await product.save();
-    res.send({ message: "Product saved!", class: "success" });
+    res.send({ message: "Product saved!", status: "success" });
   },
 
   productsView: async (req, res) => {
     const products = await Product.find({});
-    console.log(products);
     res.render("../views/products/index", { products: products });
   },
   productsAddForm: (req, res) => {
