@@ -13,7 +13,10 @@ const productsController = {
   productsView: async (req, res) => {
     const products = await Product.find({});
     console.log(products);
-    res.render("../views/products", { products: products });
+    res.render("../views/products/index", { products: products });
+  },
+  productsAddForm: (req, res) => {
+    res.render("../views/products/add-product");
   },
 };
 
