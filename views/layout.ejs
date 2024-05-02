@@ -7,9 +7,9 @@
 
     <title>Document</title>
   </head>
-  <%- include("partials/header.ejs") -%>
   <body>
-    <%- section %>
+    <%- include("partials/header.ejs") -%>
+    <section id="main-section"><%- section %></section>
+    <%- include("partials/footer.ejs") -%>
   </body>
-  <%- include("partials/footer.ejs") -%>
 </html>

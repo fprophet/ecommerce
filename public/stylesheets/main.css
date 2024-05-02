@@ -9,5 +9,35 @@ body {
   margin: 0;
 }
 header {
+  flex: 1;
+  max-height: 70px;
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 50px;
+  background-color: lightgray;
+}
+#logo {
+  font-size: 30px;
+  font-weight: bold;
+}
+header ul {
+  list-style-type: none;
+  display: flex;
+}
+header ul li {
+  margin: 0 10px;
+  font-size: 20px;
+}
+#main-section {
+  flex: 1;
+  padding: 0 100px;
+}
+footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: lightgray;
+  max-height: 100px;
+  flex: 1;
 }
