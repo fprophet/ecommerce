@@ -1,6 +1,7 @@
 const Product = require("../models/products");
 const Category = require("../models/categories");
-
+const mongoose = require("mongoose");
+// mongoose.set("debug", true);
 const productsController = {
   create: async (req, res, next) => {
     if (!req.body.name || !req.body.quantity) {
@@ -40,6 +41,35 @@ const productsController = {
       .catch(function (err) {
         res.send({
           message: "Error in deleting product",
+          status: "failed",
+        });
+        return next();
+      });
+  },
+
+  update: async (req, res, next) => {
+    Product.findOneAndUpdate(
+      { _id: req.body.id },
+      {
+        $set: {
+          name: req.body.name,
+          quantity: req.body.quantity,
+        },
+      },
+      {
+        new: true,
+      }
+    )
+      .then(function (response) {
+        console.log(response);
+        res.send({
+          message: "Product updated",
+          status: "success",
+        });
+      })
+      .catch(function (err) {
+        res.send({
+          message: "Error in updating product",
           status: "failed",
         });
         return next();

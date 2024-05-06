@@ -8,5 +8,6 @@ router.get("/add", controller.productsAddForm);
 
 router.delete("/delete", controller.delete);
 router.post("/create", controller.create);
+router.put("/update", controller.update);
 
 module.exports = router;

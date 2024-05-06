@@ -25,9 +25,9 @@ function getFormValues(form) {
   let item = {};
 
   const inputs = $("input,textarea,select", true);
-
+  console.log(inputs);
   inputs.forEach(function (elem) {
-    item.elem = elem.value;
+    item[elem.id] = elem.value;
   });
 
   return item;
@@ -118,8 +118,10 @@ function _handleProductButtonClick(event) {
 
 function _handleSubmitForm(event) {
   event.preventDefault();
-  const data = getFormValues(form);
+  const data = getFormValues($("#product-form"));
+  console.log(data);
   if (edit) {
+    data.id = edit;
     updateReuest(data);
   } else {
     createReuest(data);
