@@ -2,3 +2,19 @@
 
 <h1>THIS IS PRODUCTS VIEW</h1>
 <a href="/products/add">Add Products</a>
+
+<div id="products-list">
+  <% products.forEach((product)=>{%>
+  <div class="product-holder" data-id="<%= product.id%>">
+    <div>
+      <span class="product-holder-span">Name: <%= product.name %></span>
+      <span class="product-holder-span">Quantity: <%= product.quantity %></span>
+      <span class="product-holder-span">Category: <%= "CATEGORY" %></span>
+    </div>
+    <div>
+      <button class="product-button" id="update">💾</button>
+      <button class="product-button" id="delete">❌</button>
+    </div>
+  </div>
+  <% })%>
+</div>

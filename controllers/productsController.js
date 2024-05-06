@@ -15,10 +15,34 @@ const productsController = {
       });
       return next();
     }
-
     await Product.create({ name: req.body.name, quantity: req.body.quantity });
-
     res.send({ message: "Product saved!", status: "success" });
+  },
+
+  delete: async (req, res, next) => {
+    console.log(req.body);
+    if (!req.body.id) {
+      res.send({
+        message: "No id provided!",
+        status: "failed",
+      });
+      return next();
+    }
+
+    Product.findByIdAndDelete(req.body.id)
+      .then(function (response) {
+        res.send({
+          message: "Product deleted",
+          status: "success",
+        });
+      })
+      .catch(function (err) {
+        res.send({
+          message: "Error in deleting product",
+          status: "failed",
+        });
+        return next();
+      });
   },
 
   productsView: async (req, res) => {
