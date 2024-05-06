@@ -1,1 +1,10 @@
-<%- contentFor("section")%> aaaaaaaaa
+<%- contentFor("section")%> <%- contentFor("section") %>
+
+<h1>THIS IS CATEGORIES VIEW</h1>
+<form action="/categories/create" method="POST">
+  <div class="input-group">
+    <label for="name">Category Name</label>
+    <input required type="text" name="name" id="name" />
+  </div>
+  <input type="submit" value="Create category" />
+</form>
