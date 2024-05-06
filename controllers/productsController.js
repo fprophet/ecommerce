@@ -1,6 +1,4 @@
-const { name } = require("ejs");
 const Product = require("../models/products");
-const model = require("../models/products");
 
 const productsController = {
   create: async (req, res, next) => {

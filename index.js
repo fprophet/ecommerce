@@ -8,6 +8,7 @@ var path = require("path");
 app.use(express.static(path.join(__dirname, "/public")));
 
 const productsRouter = require("./routes/products");
+const categoryRouter = require("./routes/categories");
 var expressLayouts = require("express-ejs-layouts");
 
 mongoose
@@ -25,7 +26,9 @@ app.use(expressLayouts);
 app.get("/", function (req, res) {
   res.render("index");
 });
+
 app.use("/products", productsRouter);
+app.use("/categories", categoryRouter);
 app.listen(3000, function () {
   console.log("listening on port 3000");
 });
