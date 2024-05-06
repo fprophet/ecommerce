@@ -9,6 +9,10 @@ const ProductSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  category: {
+    type: mongoose.Types.ObjectId,
+    ref: "Category",
+  },
 });
 
 const Product = mongoose.model("Product", ProductSchema);

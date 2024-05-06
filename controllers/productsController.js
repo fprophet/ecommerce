@@ -18,11 +18,8 @@ const productsController = {
       return next();
     }
 
-    const product = new Product();
-    product.quantity = req.body.quantity;
-    product.name = req.body.name;
+    await Product.create({ name: req.body.name, quantity: req.body.quantity });
 
-    await product.save();
     res.send({ message: "Product saved!", status: "success" });
   },
 
