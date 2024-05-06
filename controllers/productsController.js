@@ -1,4 +1,5 @@
 const Product = require("../models/products");
+const Category = require("../models/categories");
 
 const productsController = {
   create: async (req, res, next) => {
@@ -47,7 +48,11 @@ const productsController = {
 
   productsView: async (req, res) => {
     const products = await Product.find({});
-    res.render("../views/products/index", { products: products });
+    const categories = await Category.find({});
+    res.render("../views/products/index", {
+      products: products,
+      categories: categories,
+    });
   },
   productsAddForm: (req, res) => {
     res.render("../views/products/add-product");

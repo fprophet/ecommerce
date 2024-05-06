@@ -1,15 +1,21 @@
 <%- contentFor("section") %>
 
 <h1>THIS IS PRODUCTS VIEW</h1>
-<a href="/products/add">Add Products</a>
-
+<h2>Products List</h2>
 <div id="products-list">
   <% products.forEach((product)=>{%>
   <div class="product-holder" data-id="<%= product.id%>">
     <div>
-      <span class="product-holder-span">Name: <%= product.name %></span>
-      <span class="product-holder-span">Quantity: <%= product.quantity %></span>
-      <span class="product-holder-span">Category: <%= "CATEGORY" %></span>
+      <span class="product-holder-span"
+        >Name: <span class="product-name"><%= product.name %></span></span
+      >
+      <span class="product-holder-span"
+        >Quantity:
+        <span class="product-quantity"><%= product.quantity %></span></span
+      >
+      <span class="product-holder-span"
+        >Category: <span class="product-category"><%= "CATEGORY" %></span></span
+      >
     </div>
     <div>
       <button class="product-button" id="update">💾</button>
@@ -18,3 +24,24 @@
   </div>
   <% })%>
 </div>
+
+<h2>Add/Update Products</h2>
+<form id="product-form" action="/products/create" method="POST">
+  <div class="input-group">
+    <label for="name">Product Name</label>
+    <input required type="text" name="name" id="name" />
+  </div>
+  <div class="input-group">
+    <label for="quantity">Quantity</label>
+    <input required type="text" name="quantity" id="quantity" />
+  </div>
+  <div class="input-group">
+    <label for="category">Category</label>
+    <select required type="text" name="category" id="category">
+      <% categories.forEach(function(category){%>
+      <option value="<%=category.id%>"><%=category.name%></option>
+      <%})%>
+    </select>
+  </div>
+  <input type="submit" id="submit-form" value="Save product" />
+</form>
