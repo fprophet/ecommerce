@@ -24,6 +24,10 @@ class baseController {
     res.send({ message: this.name + " saved!", status: "success" });
   };
 
+  get = async (req, res, next) => {
+    return this.model.find({});
+  };
+
   delete = async (req, res, next) => {
     if (!req.body.id) {
       res.send({
