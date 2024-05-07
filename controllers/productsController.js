@@ -54,6 +54,7 @@ const productsController = {
         $set: {
           name: req.body.name,
           quantity: req.body.quantity,
+          category: req.body.category,
         },
       },
       {
@@ -77,7 +78,11 @@ const productsController = {
   },
 
   productsView: async (req, res) => {
-    const products = await Product.find({});
+    const products = await Product.find({}).populate({
+      path: "category",
+      select: "name",
+    });
+    console.log(products);
     const categories = await Category.find({});
     res.render("../views/products/index", {
       products: products,

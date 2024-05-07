@@ -38,7 +38,7 @@ function populateForm() {
   const product_holder = $(`[data-id="${edit}"]`);
   const keys = ["name", "quantity", "category"];
   keys.forEach(function (key) {
-    const data_span = $(".product-" + key);
+    const data_span = product_holder.querySelector(".product-" + key);
     const input = $("#" + key);
     input.value = data_span.innerHTML;
   });
@@ -78,12 +78,12 @@ function updateReuest(product, callback = false) {
     .then((data) => {
       console.log(data.message);
       if (callback) {
-        callback();
+        callback(data);
       }
     });
 }
 
-function createReuest(product, callback = false) {
+function createRequest(product, callback = false) {
   fetch(PRODUCTS_API_URL + "create", {
     method: "create",
     headers: {
@@ -104,6 +104,14 @@ function removeProductItem(id) {
   $(`[data-id="${id}"]`).remove();
 }
 
+function updateCallback(data) {
+  if (data.status == "success") {
+    // window.location.reload();
+  } else {
+    window.alert(data.message);
+  }
+}
+
 function _handleProductButtonClick(event) {
   const action = event.target.id;
   const product_id = event.target.parentElement.parentElement.dataset.id;
@@ -122,9 +130,9 @@ function _handleSubmitForm(event) {
   console.log(data);
   if (edit) {
     data.id = edit;
-    updateReuest(data);
+    updateReuest(data, updateCallback);
   } else {
-    createReuest(data);
+    createRequest(data);
   }
 }
 
