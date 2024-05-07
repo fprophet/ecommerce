@@ -106,7 +106,7 @@ function removeProductItem(id) {
 
 function updateCallback(data) {
   if (data.status == "success") {
-    // window.location.reload();
+    window.location.reload();
   } else {
     window.alert(data.message);
   }
