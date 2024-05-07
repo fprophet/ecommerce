@@ -3,16 +3,18 @@ class baseController {
 
   model = "";
 
+  paths = [];
+
   create = async (req, res, next) => {
     if (!req.body.name || !req.body.quantity) {
       res.send({ message: "Fill all fields", status: "success" });
       return next();
     }
 
-    const found = await Product.findOne({ name: req.body.name });
+    const found = await this.model.findOne({ name: req.body.name });
     if (found) {
       res.send({
-        message: "Product with this name already exists!",
+        message: this.name + " with this name already exists!",
         status: "failed",
       });
       return next();
@@ -55,15 +57,12 @@ class baseController {
   };
 
   update = async (req, res, next) => {
+    console.log(this.getUpdateObject(req));
     this.model
       .findOneAndUpdate(
         { _id: req.body.id },
         {
-          $set: {
-            name: req.body.name,
-            quantity: req.body.quantity,
-            category: req.body.category,
-          },
+          $set: this.getUpdateObject(req),
         },
         {
           new: true,
@@ -82,6 +81,16 @@ class baseController {
         });
         return next();
       });
+  };
+
+  getUpdateObject = (req) => {
+    let object = {};
+    this.paths.forEach(function (path) {
+      if (req.body[path]) {
+        object[path] = req.body[path];
+      }
+    });
+    return object;
   };
 }
 

@@ -8,6 +8,8 @@ class productController extends baseController {
     super();
     this.name = "Product";
     this.model = require("../models/product");
+
+    this.paths = Object.keys(this.model.schema.paths);
   }
 
   productsView = async (req, res) => {
