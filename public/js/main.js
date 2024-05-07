@@ -85,7 +85,7 @@ function updateReuest(product, callback = false) {
 
 function createRequest(product, callback = false) {
   fetch(PRODUCTS_API_URL + "create", {
-    method: "create",
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
     },

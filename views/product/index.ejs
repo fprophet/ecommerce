@@ -15,7 +15,9 @@
       >
       <span class="product-holder-span"
         >Category:
-        <span class="product-category"><%= product.category.name %></span></span
+        <span class="product-category"
+          ><%= product.category ? product.category.name : "NULL" %></span
+        ></span
       >
     </div>
     <div>
