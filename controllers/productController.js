@@ -12,6 +12,17 @@ class productController extends baseController {
     this.paths = Object.keys(this.model.schema.paths);
   }
 
+  parentCreate = this.create;
+
+  // create = async (req, res, next) => {
+  //   const item = await this.parentCreate(req, res, next);
+  //   if (item) {
+  //     const category = await Category.findById(new_item.category);
+  //     category.products.push(new_item._id);
+  //     category.save();
+  //   }
+  // };
+
   productsView = async (req, res) => {
     const products = await this.model.find({}).populate({
       path: "category",

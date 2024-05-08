@@ -1,3 +1,4 @@
+const Category = require("../models/category");
 class baseController {
   name = "";
 
@@ -14,8 +15,10 @@ class baseController {
       });
       return next();
     }
-    await this.model.create(this.getUpdateObject(req));
+    const new_item = await this.model.create(this.getUpdateObject(req));
+
     res.send({ message: this.name + " saved!", status: "success" });
+    return new_item;
   };
 
   get = async (req, res, next) => {
@@ -31,16 +34,17 @@ class baseController {
       return next();
     }
 
-    let self = this;
-    this.model
-      .findByIdAndDelete(req.body.id)
+    await this.model
+      .deleteOne({ _id: req.body.id })
       .then(function (response) {
         res.send({
           message: self.name + " deleted",
           status: "success",
         });
+        return req.body.id;
       })
       .catch(function (err) {
+        console.log(err);
         res.send({
           message: "Error in deleting " + self.name,
           status: "failed",
