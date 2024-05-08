@@ -88,6 +88,10 @@ class baseController {
     });
     return object;
   };
+
+  getMainView = (req, res) => {
+    res.render("../views/" + this.name.toLocaleLowerCase() + "/index");
+  };
 }
 
 module.exports = baseController;

@@ -1,5 +1,14 @@
-let PRODUCTS_API_URL = "http://localhost:3000/products/";
+let index = getCurrentIndex();
+let API_URL = getCurrentAPI();
 let edit = false;
+
+function getCurrentAPI() {
+  return "http://localhost:3000/" + index + "/";
+}
+
+function getCurrentIndex() {
+  return window.location.pathname.split("/")[1];
+}
 
 function $(selector, all = false) {
   if (all) {
@@ -10,10 +19,10 @@ function $(selector, all = false) {
 }
 
 function initEvents() {
-  const product_buttons = $(".product-button", true);
-  if (product_buttons) {
-    product_buttons.forEach(function (button) {
-      button.addEventListener("click", _handleProductButtonClick);
+  const obj_buttons = $(`.${index}-button`, true);
+  if (obj_buttons) {
+    obj_buttons.forEach(function (button) {
+      button.addEventListener("click", _handleObjButtonClick);
     });
   }
 
@@ -34,13 +43,12 @@ function getFormValues(form) {
 }
 
 function populateForm() {
-  const form = $("#product-form");
-  const product_holder = $(`[data-id="${edit}"]`);
-  const keys = ["name", "quantity", "category"];
-  keys.forEach(function (key) {
-    const data_span = product_holder.querySelector(".product-" + key);
-    const input = $("#" + key);
-    input.value = data_span.innerHTML;
+  const form = $(`#${index}-form`);
+  const obj_holder = $(`[data-id="${edit}"]`);
+  const key_spans = obj_holder.querySelectorAll("span[data-target]");
+  key_spans.forEach(function (key_span) {
+    const input = $("#" + key_span.dataset.target);
+    input.value = key_span.innerHTML;
   });
 }
 
@@ -50,7 +58,7 @@ function startUpdate(id) {
 }
 
 function deleteRequest(id, callback = false) {
-  fetch(PRODUCTS_API_URL + "delete", {
+  fetch(API_URL + "delete", {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -66,13 +74,13 @@ function deleteRequest(id, callback = false) {
     });
 }
 
-function updateReuest(product, callback = false) {
-  fetch(PRODUCTS_API_URL + "update", {
+function updateReuest(obj, callback = false) {
+  fetch(API_URL + "update", {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(product),
+    body: JSON.stringify(obj),
   })
     .then((response) => response.json())
     .then((data) => {
@@ -83,13 +91,13 @@ function updateReuest(product, callback = false) {
     });
 }
 
-function createRequest(product, callback = false) {
-  fetch(PRODUCTS_API_URL + "create", {
+function createRequest(obj, callback = false) {
+  fetch(API_URL + "create", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(product),
+    body: JSON.stringify(obj),
   })
     .then((response) => response.json())
     .then((data) => {
@@ -100,7 +108,7 @@ function createRequest(product, callback = false) {
     });
 }
 
-function removeProductItem(id) {
+function removeObjItem(id) {
   $(`[data-id="${id}"]`).remove();
 }
 
@@ -112,21 +120,21 @@ function updateCallback(data) {
   }
 }
 
-function _handleProductButtonClick(event) {
+function _handleObjButtonClick(event) {
   const action = event.target.id;
-  const product_id = event.target.parentElement.parentElement.dataset.id;
+  const obj_id = event.target.parentElement.parentElement.dataset.id;
   switch (action) {
     case "delete":
-      deleteRequest(product_id, removeProductItem(product_id));
+      deleteRequest(obj_id, removeObjItem(obj_id));
       break;
     case "update":
-      startUpdate(product_id);
+      startUpdate(obj_id);
   }
 }
 
 function _handleSubmitForm(event) {
   event.preventDefault();
-  const data = getFormValues($("#product-form"));
+  const data = getFormValues($(`#${index}-form`));
   console.log(data);
   if (edit) {
     data.id = edit;

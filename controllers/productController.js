@@ -23,7 +23,7 @@ class productController extends baseController {
   //   }
   // };
 
-  productsView = async (req, res) => {
+  getMainView = async (req, res) => {
     const products = await this.model.find({}).populate({
       path: "category",
       select: "name",

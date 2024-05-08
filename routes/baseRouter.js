@@ -7,5 +7,6 @@ module.exports = (controller) => {
   router.get("/get", controller.get);
   router.delete("/delete", controller.delete);
 
+  router.get("/", controller.getMainView);
   return router;
 };

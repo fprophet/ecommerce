@@ -7,15 +7,20 @@
   <div class="product-holder" data-id="<%= product.id%>">
     <div>
       <span class="product-holder-span"
-        >Name: <span class="product-name"><%= product.name %></span></span
+        >Name:
+        <span class="product-name" data-target="name"
+          ><%= product.name %></span
+        ></span
       >
       <span class="product-holder-span"
         >Quantity:
-        <span class="product-quantity"><%= product.quantity %></span></span
+        <span class="product-quantity" data-target="quantity"
+          ><%= product.quantity %></span
+        ></span
       >
       <span class="product-holder-span"
         >Category:
-        <span class="product-category"
+        <span class="product-category" data-target="category"
           ><%= product.category ? product.category.name : "NULL" %></span
         ></span
       >
@@ -29,7 +34,7 @@
 </div>
 
 <h2>Add/Update Products</h2>
-<form id="product-form" action="/products/create" method="POST">
+<form id="products-form" action="/products/create" method="POST">
   <div class="input-group">
     <label for="name">Product Name</label>
     <input required type="text" name="name" id="name" />
