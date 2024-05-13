@@ -1,6 +1,25 @@
 <%- contentFor("section")%> <%- contentFor("section") %>
 
 <h1>THIS IS CATEGORIES VIEW</h1>
+<div id="categories-list">
+  <% categories.forEach(function(category){%>
+  <div class="category-holder" data-id="<%= category.id%>">
+    <div>
+      <span class="category-holder-span">
+        <span class="categories-name" data-target="name"
+          ><%= category.name%></span
+        >
+      </span>
+    </div>
+    <div>
+      <button class="categories-button" id="update">💾</button>
+      <button class="categories-button" id="delete">❌</button>
+      <button class="categories-button" id="get-products">Show products</button>
+    </div>
+  </div>
+
+  <%}) %>
+</div>
 <form action="/categories/create" method="POST">
   <div class="input-group">
     <label for="name">Category Name</label>

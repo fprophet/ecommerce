@@ -54,6 +54,15 @@ header ul li {
 .input-group select {
   max-width: 300px;
 }
+#categories-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+.category-holder {
+  width: 25%;
+  padding: 10px;
+  margin: 10px;
+}
 
 footer {
   display: flex;

@@ -33,7 +33,7 @@ class baseController {
       });
       return next();
     }
-
+    const self = this;
     await this.model
       .deleteOne({ _id: req.body.id })
       .then(function (response) {
@@ -89,8 +89,9 @@ class baseController {
     return object;
   };
 
-  getMainView = (req, res) => {
+  getMainView = (req, res, next) => {
     res.render("../views/" + this.name.toLocaleLowerCase() + "/index");
+    next();
   };
 }
 

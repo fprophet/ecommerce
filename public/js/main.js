@@ -120,6 +120,32 @@ function updateCallback(data) {
   }
 }
 
+function fetchCategoryProducts(id) {
+  return fetch(API_URL + "get-products", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ id: id }),
+  });
+}
+
+function displayProducts(products) {
+  console.log(products);
+}
+
+async function getCategoryProducts(id) {
+  fetchCategoryProducts(id)
+    .then((res) => res.json())
+    .then((response) => {
+      if (response["status"] == "success") {
+        displayProducts(response["products"]);
+      } else {
+        window.alert("something went wrong");
+      }
+    });
+}
+
 function _handleObjButtonClick(event) {
   const action = event.target.id;
   const obj_id = event.target.parentElement.parentElement.dataset.id;
@@ -129,6 +155,10 @@ function _handleObjButtonClick(event) {
       break;
     case "update":
       startUpdate(obj_id);
+      break;
+    case "get-products":
+      const id = event.target.parentElement.parentElement.dataset.id;
+      getCategoryProducts();
   }
 }
 
