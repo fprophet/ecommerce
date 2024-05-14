@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+var httpContext = require("express-http-context");
 
 const ProductSchema = new mongoose.Schema({
   name: {
@@ -46,6 +47,32 @@ ProductSchema.pre("save", async function (next) {
 
     next()
   );
+});
+
+// ProductSchema.pre("save", async function (next) {
+//   await this.model("Category").findByIdAndUpdate(
+//     { _id: this.category },
+//     { $push: { products: this._id } },
+
+//     next()
+//   );
+// });
+
+ProductSchema.pre("findOneAndUpdate", async function (next) {
+  const product = await this.model.findOne(this.getQuery());
+
+  //get the new category id
+  const update_category_id = this.getUpdate().$set.category;
+
+  //delete from old category
+  await mongoose
+    .model("Category")
+    .findByIdAndUpdate(product.category, { $pull: { products: product._id } });
+
+  //add to new category
+  await mongoose.model("Category").findByIdAndUpdate(update_category_id, {
+    $push: { products: product._id },
+  });
 });
 const Product = mongoose.model("Product", ProductSchema);
 

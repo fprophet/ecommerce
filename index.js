@@ -10,6 +10,7 @@ app.use(express.static(path.join(__dirname, "/public")));
 const productRouter = require("./routes/product");
 const categoryRouter = require("./routes/category");
 var expressLayouts = require("express-ejs-layouts");
+var httpContext = require("express-http-context");
 
 mongoose
   .connect("mongodb://127.0.0.1:27017/ecommerce")
@@ -17,6 +18,7 @@ mongoose
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(httpContext.middleware);
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");

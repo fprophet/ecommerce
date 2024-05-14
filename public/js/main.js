@@ -27,7 +27,9 @@ function initEvents() {
   }
 
   const form_submit = $("#submit-form");
-  form_submit.addEventListener("click", _handleSubmitForm);
+  if (form_submit) {
+    form_submit.addEventListener("click", _handleSubmitForm);
+  }
 }
 
 function getFormValues(form) {
