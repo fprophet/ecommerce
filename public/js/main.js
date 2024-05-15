@@ -30,6 +30,12 @@ function initEvents() {
   if (form_submit) {
     form_submit.addEventListener("click", _handleSubmitForm);
   }
+
+  const cancel_edit = $("#cancel-edit");
+
+  if (cancel_edit) {
+    cancel_edit.addEventListener("click", _handleCancelEdit);
+  }
 }
 
 function getFormValues(form) {
@@ -174,6 +180,10 @@ function _handleSubmitForm(event) {
   } else {
     createRequest(data);
   }
+}
+
+function _handleCancelEdit() {
+  edit = false;
 }
 
 initEvents();

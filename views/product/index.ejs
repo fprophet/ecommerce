@@ -1,17 +1,14 @@
 <%- contentFor("section") %>
 
-<h1>THIS IS PRODUCTS VIEW</h1>
 <h2>Products List</h2>
 <div id="products-list">
   <% products.forEach((product)=>{%>
   <div class="product-holder" data-id="<%= product.id%>">
+    <img height="150" src="/images/products/<%= product.images &&
+    product.images[0] ? product.images[0] : "default.jpg"%>" alt="">
+    <hr />
     <div>
-      <span class="product-holder-span"
-        >Name:
-        <span class="product-name" data-target="name"
-          ><%= product.name %></span
-        ></span
-      >
+      <span class="product-name" data-target="name"><%= product.name %></span>
       <span class="product-holder-span"
         >Quantity:
         <span class="product-quantity" data-target="quantity"
@@ -19,21 +16,28 @@
         ></span
       >
       <span class="product-holder-span"
+        >Description:
+        <span class="product-category" data-target="category"
+          ><%= product.category ? product.category.description : "NULL" %></span
+        ></span
+      >
+      <!-- <span class="product-holder-span"
         >Category:
         <span class="product-category" data-target="category"
           ><%= product.category ? product.category.name : "NULL" %></span
         ></span
-      >
+      > -->
     </div>
     <div>
-      <button class="products-button" id="update">💾</button>
-      <button class="products-button" id="delete">❌</button>
+      <a href="/products/<%= product.name %>">See product</a>
+      <!-- <button class="products-button" id="update">💾</button>
+      <button class="products-button" id="delete">❌</button> -->
     </div>
   </div>
   <% })%>
 </div>
 
-<h2>Add/Update Products</h2>
+<!-- <h2>Add/Update Products</h2>
 <form id="products-form" action="/products/create" method="POST">
   <div class="input-group">
     <label for="name">Product Name</label>
@@ -51,5 +55,8 @@
       <%})%>
     </select>
   </div>
-  <button type="submit" id="submit-form" value="">Save product</button>
-</form>
+  <div>
+    <button type="submit" id="submit-form" value="">Save product 💾</button>
+    <button id="cancel-edit" value="">Cancel Edit ❌</button>
+  </div>
+</form> -->

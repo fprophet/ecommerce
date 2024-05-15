@@ -23,6 +23,13 @@ class productController extends baseController {
       categories: categories,
     });
   };
+
+  getProductAndRender = async (req, res) => {
+    const product = await this.model.findOne({ name: req.params["product"] });
+    if (product) {
+      res.render("../views/product/product", { product: product });
+    }
+  };
 }
 
 const controller = new productController();
