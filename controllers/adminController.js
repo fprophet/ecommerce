@@ -37,7 +37,6 @@ class adminController extends baseController {
     if (!cookie) {
       return res.sendStatus(403);
     }
-    console.log(cookie);
     const decoded = jwt.verify(cookie, "secretKey");
 
     req.adminID = decoded.adminID;

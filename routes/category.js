@@ -1,7 +1,13 @@
-const controller = require("../controllers/categoryController");
-const router = require("./baseRouter")(controller);
+const categoryController = require("../controllers/categoryController");
+const adminController = require("../controllers/adminController");
 
-router.get("/", controller.getMainAdminView);
-router.post("/get-products", controller.getProductsForCategory);
+const router = require("./baseRouter")(categoryController);
+
+router.get(
+  "/",
+  adminController.authorizeUser,
+  categoryController.getMainAdminView
+);
+router.post("/get-products", categoryController.getProductsForCategory);
 
 module.exports = router;
