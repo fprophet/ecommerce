@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+var session = require("express-session");
 
 // mongoose.connection.close();
 
@@ -20,6 +21,19 @@ mongoose
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+app.use(
+  session({
+    secret: "some-secret-key-here",
+    resave: true,
+    saveUninitialized: true,
+  })
+);
+
+app.use(function (req, res, next) {
+  res.locals.userId = req.session.userId;
+  next();
+});
+
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 app.set("layout", "layout");
@@ -29,11 +43,9 @@ app.get("/", function (req, res) {
   res.render("index");
 });
 
-app.use("/products", productRouter);
-app.use("/categories", categoryRouter);
-
+app.use("/admin/products", productRouter);
+app.use("/admin/categories", categoryRouter);
 app.use("/admin", adminRouter);
-// createDefaultAdmin();
 
 app.listen(3000, function () {
   console.log("listening on port 3000");

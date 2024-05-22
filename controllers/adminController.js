@@ -24,9 +24,12 @@ class adminController extends baseController {
     const decoded = jwt.verify(cookie, "secretKey");
     req.userId = decoded.userId;
     if (decoded.role !== "admin") {
+      res.clearCookie("SessionID");
       return res.sendStatus(403);
     }
-    return res.sendStatus(200);
+    req.session.userId = decoded.userId;
+    res.status(200);
+    next();
   };
 
   loginRequest = async (req, res, next) => {
@@ -57,8 +60,6 @@ class adminController extends baseController {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    console.log(hashedPassword);
-    console.log(this.model.password);
     return hashedPassword === this.model.password;
   };
 
