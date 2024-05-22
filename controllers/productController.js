@@ -12,13 +12,13 @@ class productController extends baseController {
     this.paths = Object.keys(this.model.schema.paths);
   }
 
-  getMainView = async (req, res) => {
+  getMainAdminView = async (req, res) => {
     const products = await this.model.find({}).populate({
       path: "category",
       select: "name",
     });
     const categories = await Category.find({});
-    res.render("../views/product/index", {
+    res.render("../views/admin/product/index", {
       products: products,
       categories: categories,
     });

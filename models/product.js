@@ -57,15 +57,6 @@ ProductSchema.pre("save", async function (next) {
   );
 });
 
-// ProductSchema.pre("save", async function (next) {
-//   await this.model("Category").findByIdAndUpdate(
-//     { _id: this.category },
-//     { $push: { products: this._id } },
-
-//     next()
-//   );
-// });
-
 ProductSchema.pre("findOneAndUpdate", async function (next) {
   const product = await this.model.findOne(this.getQuery());
 
@@ -82,6 +73,7 @@ ProductSchema.pre("findOneAndUpdate", async function (next) {
     $push: { products: product._id },
   });
 });
+
 const Product = mongoose.model("Product", ProductSchema);
 
 module.exports = Product;

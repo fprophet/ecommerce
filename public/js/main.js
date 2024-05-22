@@ -3,11 +3,11 @@ let API_URL = getCurrentAPI();
 let edit = false;
 
 function getCurrentAPI() {
-  return "http://localhost:3000/" + index + "/";
+  return "http://localhost:3000/admin/" + index + "/";
 }
 
 function getCurrentIndex() {
-  return window.location.pathname.split("/")[1];
+  return window.location.pathname.split("/")[2];
 }
 
 function $(selector, all = false) {

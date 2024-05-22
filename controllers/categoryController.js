@@ -9,9 +9,9 @@ class categoryController extends baseController {
     this.paths = Object.keys(this.model.schema.paths);
   }
 
-  getMainView = async (req, res) => {
+  getMainAdminView = async (req, res) => {
     const categories = await this.model.find({});
-    res.render("../views/category/index", { categories: categories });
+    res.render("../views/admin/category/index", { categories: categories });
   };
 
   getProductsForCategory = async (req, res, next) => {
