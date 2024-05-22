@@ -30,12 +30,16 @@ class adminController extends baseController {
     }
   }
 
-  authorizeUser = (req, res, next) => {
+  authorizeUser = (req, res, next, sendHeaders = true) => {
     const authHeader = req.headers["cookie"];
 
     const cookie = this.extractToken(authHeader);
     if (!cookie) {
-      return res.sendStatus(403);
+      if (sendHeaders) {
+        return res.sendStatus(403);
+      } else {
+        return (res.statusCode = 403);
+      }
     }
     const decoded = jwt.verify(cookie, "secretKey");
 
@@ -43,12 +47,29 @@ class adminController extends baseController {
 
     if (decoded.role !== "admin") {
       res.clearCookie("SessionID");
-      return res.sendStatus(403);
+      if (sendHeaders) {
+        return res.sendStatus(403);
+      } else {
+        return (res.statusCode = 403);
+      }
     }
 
     req.session.adminID = decoded.adminID;
+
+    // if (sendHeaders) {
+    //   return res.sendStatus(403);
+    // } else {
+    //   return (res.statusCode = 403);
+    // }
     res.status(200);
     next();
+  };
+
+  logoutRequest = async (req, res, next) => {
+    res.clearCookie("SessionID");
+    delete req.session.adminID;
+
+    return res.redirect("/admin/login");
   };
 
   loginRequest = async (req, res, next) => {
@@ -70,8 +91,9 @@ class adminController extends baseController {
       "secretKey"
     );
     res.cookie("SessionID", token);
-    res.status(200).json({ token });
-    res.send();
+    res.redirect("/admin");
+    // res.status(200).json({ token });
+    // res.send();
   };
 
   comparePassword = async function (password) {
