@@ -11,23 +11,43 @@ class adminController extends baseController {
     this.paths = Object.keys(this.model.schema.paths);
   }
 
-  authorizeUser = (req, res, next) => {
-    const authHeader = req.headers["cookie"];
+  extractToken(authHeader) {
     const pos = authHeader.indexOf("SessionID");
 
     if (pos < 0) {
+      return false;
+    }
+
+    //cut the string to the SessionID part
+    const part = authHeader.substr(pos, authHeader.length);
+    //find if there is a column meaning there are more cookeis after the SessionID
+    const col_pos = part.indexOf(";");
+
+    if (col_pos < 0) {
+      return part.split("=")[1];
+    } else {
+      return part.substr(0, col_pos).split("=")[1];
+    }
+  }
+
+  authorizeUser = (req, res, next) => {
+    const authHeader = req.headers["cookie"];
+
+    const cookie = this.extractToken(authHeader);
+    if (!cookie) {
       return res.sendStatus(403);
     }
-    const sub_str = authHeader.substr(pos, authHeader.length);
-    const cookie = sub_str.split("=")[1];
-
+    console.log(cookie);
     const decoded = jwt.verify(cookie, "secretKey");
-    req.userId = decoded.userId;
+
+    req.adminID = decoded.adminID;
+
     if (decoded.role !== "admin") {
       res.clearCookie("SessionID");
       return res.sendStatus(403);
     }
-    req.session.userId = decoded.userId;
+
+    req.session.adminID = decoded.adminID;
     res.status(200);
     next();
   };
@@ -47,7 +67,7 @@ class adminController extends baseController {
     }
 
     const token = jwt.sign(
-      { userId: this.model._id, role: this.model.role },
+      { adminID: this.model._id, role: this.model.role },
       "secretKey"
     );
     res.cookie("SessionID", token);
