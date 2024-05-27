@@ -1,6 +1,11 @@
 <%- contentFor("section") %>
 
-<h2>Products List</h2>
+<h2>Products</h2>
+<% categories.forEach(function(category){%>
+<a href="/admin/products/category/<%= category.id %>"> <%= category.name %> </a>
+
+<%})%>
+
 <div id="products-list">
   <% products.forEach((product)=>{%>
   <div class="product-holder" data-id="<%= product.id%>">
@@ -22,21 +27,20 @@
         ></span
       >
       <!-- <span class="product-holder-span"
-        >Category:
-        <span class="product-category" data-target="category"
-          ><%= product.category ? product.category.name : "NULL" %></span
-        ></span
-      > -->
+          >Category:
+          <span class="product-category" data-target="category"
+            ><%= product.category ? product.category.name : "NULL" %></span
+          ></span
+        > -->
     </div>
     <div>
       <a href="/products/<%= product.name %>">See product</a>
       <!-- <button class="products-button" id="update">💾</button>
-      <button class="products-button" id="delete">❌</button> -->
+        <button class="products-button" id="delete">❌</button> -->
     </div>
   </div>
   <% })%>
 </div>
-
 <!-- <h2>Add/Update Products</h2>
 <form id="products-form" action="/products/create" method="POST">
   <div class="input-group">

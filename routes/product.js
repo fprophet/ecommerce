@@ -9,5 +9,11 @@ router.get(
   productController.getMainAdminView
 );
 
+router.get(
+  "/category/:category",
+  adminController.authorizeUser,
+  productController.getProductsForCategory
+);
+
 router.get("/:product", productController.getProductAndRender);
 module.exports = router;

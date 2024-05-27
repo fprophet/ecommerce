@@ -13,13 +13,13 @@ class productController extends baseController {
   }
 
   getMainAdminView = async (req, res) => {
-    const products = await this.model.find({}).populate({
-      path: "category",
-      select: "name",
-    });
+    // const products = await this.model.find({}).populate({
+    //   path: "category",
+    //   select: "name",
+    // });
     const categories = await Category.find({});
     res.render("../views/admin/product/index", {
-      products: products,
+      // products: products,
       categories: categories,
     });
   };
@@ -29,6 +29,18 @@ class productController extends baseController {
     if (product) {
       res.render("../views/product/product", { product: product });
     }
+  };
+
+  getProductsForCategory = async (req, res) => {
+    const categories = await Category.find({});
+    const products = await this.model.find({
+      category: req.params["category"],
+    });
+
+    res.render("../views/admin/product/index", {
+      categories: categories,
+      products: products,
+    });
   };
 }
 
