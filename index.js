@@ -36,7 +36,7 @@ app.use(function (req, res, next) {
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
-app.set("layout", "layout");
+app.set("layout", "layouts/layout");
 app.use(expressLayouts);
 
 app.get("/", function (req, res) {

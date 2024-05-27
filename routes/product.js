@@ -15,5 +15,11 @@ router.get(
   productController.getProductsForCategory
 );
 
+router.get(
+  "/add",
+  adminController.authorizeUser,
+  productController.getFormView
+);
+
 router.get("/:product", productController.getProductAndRender);
 module.exports = router;

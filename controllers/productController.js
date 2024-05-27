@@ -42,6 +42,11 @@ class productController extends baseController {
       products: products,
     });
   };
+
+  getFormView = async (req, res) => {
+    const categories = await Category.find({});
+    res.render("../views/admin/product/add", { categories: categories });
+  };
 }
 
 const controller = new productController();
