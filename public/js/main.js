@@ -18,6 +18,22 @@ function $(selector, all = false) {
   }
 }
 
+function $create(tag, id = false, cls = false, text = false) {
+  const element = document.createElement(tag);
+  if (id) {
+    element.setAttribute("id", id);
+  }
+  if (cls) {
+    cls.forEach(function (elem) {
+      element.classList.add(elem);
+    });
+  }
+  if (text) {
+    element.innerHTML = text;
+  }
+  return element;
+}
+
 function initEvents() {
   const obj_buttons = $(`.${index}-button`, true);
   if (obj_buttons) {
@@ -32,9 +48,16 @@ function initEvents() {
   }
 
   const cancel_edit = $("#cancel-edit");
-
   if (cancel_edit) {
     cancel_edit.addEventListener("click", _handleCancelEdit);
+  }
+
+  const img_input = $("#add-prod-images");
+  console.log(img_input);
+  if (img_input) {
+    const reader = new FileReader();
+
+    img_input.addEventListener("change", _handleDisplayProdImages);
   }
 }
 
@@ -179,6 +202,27 @@ function _handleSubmitForm(event) {
     updateReuest(data, updateCallback);
   } else {
     createRequest(data);
+  }
+}
+
+function _handleDisplayProdImages(event) {
+  const files = event.target.files;
+  if (files.length < 1) {
+    return false;
+  }
+  const collection_holder = $(".img-collection-wrapper");
+
+  for (i = 0; i <= files.length - 1; i++) {
+    if (i == 0) {
+      $("#main-display").src = URL.createObjectURL(files[i]);
+    }
+
+    const holder = $create("div", false, ["img-holder"]);
+    const img = $create("img");
+    img.src = URL.createObjectURL(files[i]);
+
+    holder.appendChild(img);
+    collection_holder.appendChild(holder);
   }
 }
 

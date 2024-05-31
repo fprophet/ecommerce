@@ -12,7 +12,6 @@
       <%})%>
     </div>
   </div>
-
   <% if(typeof products !== "undefined" ){ %>
   <div id="products-list">
     <% products.forEach((product)=>{%>
@@ -30,9 +29,8 @@
         >
         <span class="product-holder-span"
           >Description:
-          <span class="product-category" data-target="category"
-            ><%= product.category ? product.category.description : "NULL"
-            %></span
+          <span class="product-description" data-target="description"
+            ><%= product.description ? product.description : "NULL" %></span
           ></span
         >
         <!-- <span class="product-holder-span"
