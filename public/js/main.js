@@ -53,11 +53,16 @@ function initEvents() {
   }
 
   const img_input = $("#add-prod-images");
-  console.log(img_input);
   if (img_input) {
     const reader = new FileReader();
-
     img_input.addEventListener("change", _handleDisplayProdImages);
+  }
+
+  const arrows = $(".arr-holder", true);
+  if (arrows) {
+    arrows.forEach(function (arr) {
+      arr.addEventListener("click", _handleClickDisplayImage);
+    });
   }
 }
 
@@ -215,14 +220,36 @@ function _handleDisplayProdImages(event) {
   for (i = 0; i <= files.length - 1; i++) {
     if (i == 0) {
       $("#main-display").src = URL.createObjectURL(files[i]);
+      $("#main-display").dataset.id = i;
     }
 
     const holder = $create("div", false, ["img-holder"]);
     const img = $create("img");
+    img.setAttribute("data-id", i);
     img.src = URL.createObjectURL(files[i]);
 
     holder.appendChild(img);
     collection_holder.appendChild(holder);
+  }
+}
+
+function _handleClickDisplayImage(event) {
+  const main = $("#main-display");
+  const collection = $(".img-holder", true);
+
+  if (event.target.dataset.dir == "right") {
+    console.log(main.dataset.id);
+    if (main.dataset.id < collection.length - 1) {
+      let idx = parseInt(main.dataset.id) + 1;
+      main.src = collection[idx].children[0].src;
+      main.dataset.id = idx;
+    }
+  } else {
+    if (main.dataset.id > 0) {
+      let idx = parseInt(main.dataset.id) - 1;
+      main.src = collection[idx].children[0].src;
+      main.dataset.id = idx;
+    }
   }
 }
 
