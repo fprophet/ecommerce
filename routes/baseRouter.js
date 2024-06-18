@@ -12,8 +12,13 @@ module.exports = (controller) => {
 
   const upload = multer({ storage: storage });
 
-  router.post("/create", upload.any(), controller.create);
-  router.put("/update", controller.update);
+  router.post(
+    "/create",
+    upload.any(),
+    controller.parseRequestItem,
+    controller.create
+  );
+  router.put("/update", controller.parseRequestItem, controller.update);
   router.get("/get", controller.get);
   router.delete("/delete", controller.delete);
 

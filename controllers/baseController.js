@@ -6,8 +6,19 @@ class baseController {
 
   paths = [];
 
+  req_item = {};
+
+  parseRequestItem = async (req, res, next) => {
+    if (req.body && req.body.item) {
+      this.req_item = JSON.parse(req.body.item);
+    }
+    next();
+  };
+
   create = async (req, res, next) => {
-    const found = await this.model.findOne({ name: req.body.item.name });
+    // console.log(req.body);
+
+    const found = await this.model.findOne({ name: this.req_item.name });
     if (found) {
       res.send({
         message: this.name + " with this name already exists!",
@@ -15,7 +26,6 @@ class baseController {
       });
       return next();
     }
-    console.log(req.body.item);
     const obj = this.getRequestObject(req);
     if (req.files) {
       obj.images = [];
@@ -89,9 +99,8 @@ class baseController {
 
   getRequestObject = (req) => {
     let object = {};
-    const req_obj = JSON.parse(req.body.item);
     this.paths.forEach(function (path) {
-      if (req_obj[path]) {
+      if (this.req_item[path]) {
         object[path] = req_obj[path];
       }
     });
