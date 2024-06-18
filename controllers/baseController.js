@@ -7,7 +7,7 @@ class baseController {
   paths = [];
 
   create = async (req, res, next) => {
-    const found = await this.model.findOne({ name: req.body.name });
+    const found = await this.model.findOne({ name: req.body.item.name });
     if (found) {
       res.send({
         message: this.name + " with this name already exists!",
@@ -15,8 +15,16 @@ class baseController {
       });
       return next();
     }
-    const new_item = await this.model.create(this.getUpdateObject(req));
+    console.log(req.body.item);
+    const obj = this.getRequestObject(req);
+    if (req.files) {
+      obj.images = [];
+      req.files.forEach(function (img) {
+        obj.images.push(img.originalname);
+      });
+    }
 
+    const new_item = await this.model.create(obj);
     res.send({ message: this.name + " saved!", status: "success" });
     return new_item;
   };
@@ -58,7 +66,7 @@ class baseController {
       .findOneAndUpdate(
         { _id: req.body.id },
         {
-          $set: this.getUpdateObject(req),
+          $set: this.getRequestObject(req),
         },
         {
           new: true,
@@ -79,11 +87,12 @@ class baseController {
       });
   };
 
-  getUpdateObject = (req) => {
+  getRequestObject = (req) => {
     let object = {};
+    const req_obj = JSON.parse(req.body.item);
     this.paths.forEach(function (path) {
-      if (req.body[path]) {
-        object[path] = req.body[path];
+      if (req_obj[path]) {
+        object[path] = req_obj[path];
       }
     });
     return object;

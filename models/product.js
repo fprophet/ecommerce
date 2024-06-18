@@ -52,7 +52,6 @@ ProductSchema.pre("save", async function (next) {
   await this.model("Category").findByIdAndUpdate(
     { _id: this.category },
     { $push: { products: this._id } },
-
     next()
   );
 });

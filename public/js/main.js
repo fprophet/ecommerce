@@ -69,7 +69,7 @@ function initEvents() {
 function getFormValues(form) {
   let item = {};
 
-  const inputs = $("input,textarea,select", true);
+  const inputs = $("input[type=text],textarea,select", true);
   console.log(inputs);
   inputs.forEach(function (elem) {
     item[elem.id] = elem.value;
@@ -127,13 +127,11 @@ function updateReuest(obj, callback = false) {
     });
 }
 
-function createRequest(obj, callback = false) {
+function createRequest(data, callback = false) {
   fetch(API_URL + "create", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(obj),
+
+    body: data,
   })
     .then((response) => response.json())
     .then((data) => {
@@ -198,10 +196,25 @@ function _handleObjButtonClick(event) {
   }
 }
 
+function getFormData() {
+  const json = getFormValues($(`#${index}-form`));
+  const data = new FormData();
+  data.append("item", JSON.stringify(json));
+  return data;
+}
+
 function _handleSubmitForm(event) {
   event.preventDefault();
-  const data = getFormValues($(`#${index}-form`));
-  console.log(data);
+
+  const data = getFormData();
+  if (index == "products") {
+    const images = $("input[type=file]").files;
+    if (images && images.length > 0) {
+      for (i = 0; i < images.length; i++) {
+        data.append("image-" + i, images[i]);
+      }
+    }
+  }
   if (edit) {
     data.id = edit;
     updateReuest(data, updateCallback);
@@ -218,11 +231,6 @@ function _handleDisplayProdImages(event) {
   const collection_holder = $(".img-collection-wrapper");
 
   for (i = 0; i <= files.length - 1; i++) {
-    if (i == 0) {
-      $("#main-display").src = URL.createObjectURL(files[i]);
-      $("#main-display").dataset.id = i;
-    }
-
     const holder = $create("div", false, ["img-holder"]);
     const img = $create("img");
     img.setAttribute("data-id", i);
@@ -230,23 +238,32 @@ function _handleDisplayProdImages(event) {
 
     holder.appendChild(img);
     collection_holder.appendChild(holder);
+
+    if (i == 0) {
+      holder.classList.add("selected");
+      $("#main-display").src = URL.createObjectURL(files[i]);
+      $("#main-display").dataset.id = i;
+    }
   }
 }
 
 function _handleClickDisplayImage(event) {
   const main = $("#main-display");
   const collection = $(".img-holder", true);
-
-  if (event.target.dataset.dir == "right") {
-    console.log(main.dataset.id);
+  const holder = event.target.closest(".arr-holder");
+  if (holder.dataset.dir == "right") {
     if (main.dataset.id < collection.length - 1) {
       let idx = parseInt(main.dataset.id) + 1;
+      collection[idx].classList.add("selected");
+      collection[idx - 1].classList.remove("selected");
       main.src = collection[idx].children[0].src;
       main.dataset.id = idx;
     }
   } else {
     if (main.dataset.id > 0) {
       let idx = parseInt(main.dataset.id) - 1;
+      collection[idx].classList.add("selected");
+      collection[idx + 1].classList.remove("selected");
       main.src = collection[idx].children[0].src;
       main.dataset.id = idx;
     }
