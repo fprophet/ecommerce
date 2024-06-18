@@ -99,9 +99,10 @@ class baseController {
 
   getRequestObject = (req) => {
     let object = {};
+    let itm = this.req_item;
     this.paths.forEach(function (path) {
-      if (this.req_item[path]) {
-        object[path] = req_obj[path];
+      if (itm[path]) {
+        object[path] = itm[path];
       }
     });
     return object;

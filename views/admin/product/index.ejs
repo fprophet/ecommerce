@@ -17,7 +17,8 @@
     <% products.forEach((product)=>{%>
     <div class="product-holder" data-id="<%= product.id%>">
       <img height="150" src="/images/products/<%= product.images &&
-      product.images[0] ? product.images[0] : "default.jpg"%>" alt="">
+      product.images[0] ? product.id + "/" + product.images[0] :
+      "default.jpg"%>" alt="">
       <hr />
       <div>
         <span class="product-name" data-target="name"><%= product.name %></span>

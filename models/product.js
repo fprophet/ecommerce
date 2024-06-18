@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-var httpContext = require("express-http-context");
+var fs = require("fs");
 
 const ProductSchema = new mongoose.Schema({
   name: {
@@ -49,6 +49,17 @@ ProductSchema.pre("deleteOne", async function (next) {
 });
 
 ProductSchema.pre("save", async function (next) {
+  if (this.images) {
+    let new_path = "./public/images/products/" + this.id;
+    fs.mkdir(new_path, function (err) {
+      if (err) throw err;
+    });
+    this.images.forEach(function (img) {
+      fs.rename("./uploads/" + img, new_path + "/" + img, function (err) {
+        if (err) throw err;
+      });
+    });
+  }
   await this.model("Category").findByIdAndUpdate(
     { _id: this.category },
     { $push: { products: this._id } },
