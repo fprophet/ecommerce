@@ -1,1 +1,55 @@
-<%- contentFor("section")%> ayayaya
+<%- contentFor("section")%>
+
+<h1><%= product.name%></h1>
+<div class="product-main-wrapper">
+  <div id="upate-poduct-form" class="form-holder">
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <span class="form-val" id="name"><%= product.name%></span>
+    </div>
+    <div class="form-group">
+      <label for="description">Description:</label>
+      <span class="form-val" id="description"><%= product.description %></span>
+    </div>
+    <div class="form-group">
+      <label for="quantity">In stock:</label>
+      <span id="quantity"><%= product.quantity %></span>
+    </div>
+    <div class="product-img-display">
+      <div class="main-img-wrapper">
+        <div class="left-arr-holder arr-holder" data-dir="left">
+          <i class="fa-solid fa-angle-left"></i>
+        </div>
+        <div class="img-display">
+          <% if(product.images && product.images.length > 0){ %> <img
+          src="/images/products/<%= product.id + "/" + product.images[0]%>"
+          alt="" width="800" height="250" id="main-display" data-id="" /> <%
+          }else{ %>
+          <span>No images</span>
+          <% } %>
+        </div>
+        <div class="right-arr-holder arr-holder" data-dir="right">
+          <i class="fa-solid fa-chevron-right"></i>
+        </div>
+      </div>
+      <div class="img-collection-wrapper">
+        <% if(product.images && product.images.length> 0){ %> <%
+        product.images.forEach(function(img){%>
+        <div class="img-holder selected">
+          <img data-id="0" src="/images/products/<%= product.id + "/" + img%>"
+          />
+        </div>
+        <% })%> <% }; %>
+      </div>
+    </div>
+  </div>
+  <div id="product-menu-wrapper" data-id="<%= product.id%>">
+    <div id="product-menu">
+      <div>
+        <button id="update">Add Images</button>
+        <button id="update">Start update</button>
+      </div>
+      <button class="products-button" id="delete">DELETE Product ❌</button>
+    </div>
+  </div>
+</div>

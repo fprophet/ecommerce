@@ -36,6 +36,7 @@ function $create(tag, id = false, cls = false, text = false) {
 
 function initEvents() {
   const obj_buttons = $(`.${index}-button`, true);
+  console.log(obj_buttons);
   if (obj_buttons) {
     obj_buttons.forEach(function (button) {
       button.addEventListener("click", _handleObjButtonClick);
@@ -185,7 +186,7 @@ function _handleObjButtonClick(event) {
   const obj_id = event.target.parentElement.parentElement.dataset.id;
   switch (action) {
     case "delete":
-      deleteRequest(obj_id, removeObjItem(obj_id));
+      deleteRequest(obj_id);
       break;
     case "update":
       startUpdate(obj_id);

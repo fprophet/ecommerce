@@ -27,7 +27,7 @@ class productController extends baseController {
   getProductAndRender = async (req, res) => {
     const product = await this.model.findOne({ name: req.params["product"] });
     if (product) {
-      res.render("../views/product/product", { product: product });
+      res.render("../views/admin/product/product", { product: product });
     }
   };
 

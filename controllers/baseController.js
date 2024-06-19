@@ -59,7 +59,7 @@ class baseController {
           message: self.name + " deleted",
           status: "success",
         });
-        return req.body.id;
+        return next();
       })
       .catch(function (err) {
         console.log(err);
