@@ -18,6 +18,15 @@ const ProductSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  price: {
+    type: Number,
+    required: true,
+  },
+  currency: {
+    type: String,
+    enum: ["ron", "usd", "eur"],
+    required: true,
+  },
   category: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Category",

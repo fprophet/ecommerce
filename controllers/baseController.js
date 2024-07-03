@@ -9,6 +9,8 @@ class baseController {
   req_item = {};
 
   parseRequestItem = async (req, res, next) => {
+    console.log(req.body);
+    console.log("------------");
     if (req.body && req.body.item) {
       this.req_item = JSON.parse(req.body.item);
     }
@@ -16,7 +18,7 @@ class baseController {
   };
 
   create = async (req, res, next) => {
-    // console.log(req.body);
+    console.log(this.req_item);
 
     const found = await this.model.findOne({ name: this.req_item.name });
     if (found) {
@@ -24,6 +26,7 @@ class baseController {
         message: this.name + " with this name already exists!",
         status: "failed",
       });
+      delete this.req_item;
       return next();
     }
     const obj = this.getRequestObject(req);
@@ -33,10 +36,16 @@ class baseController {
         obj.images.push(img.originalname);
       });
     }
-
-    const new_item = await this.model.create(obj);
+    try {
+      const new_item = await this.model.create(obj);
+    } catch (err) {
+      res.send({ message: "We have encountered a problem!" });
+      console.log(err.message);
+      return next();
+    }
     res.send({ message: this.name + " saved!", status: "success" });
-    return new_item;
+    delete this.req_item;
+    return next();
   };
 
   get = async (req, res, next) => {
@@ -72,9 +81,10 @@ class baseController {
   };
 
   update = async (req, res, next) => {
+    console.log(this.req_item);
     this.model
       .findOneAndUpdate(
-        { _id: req.body.id },
+        { _id: this.req_item.id },
         {
           $set: this.getRequestObject(req),
         },
@@ -89,6 +99,7 @@ class baseController {
         });
       })
       .catch(function (err) {
+        console.log(err.message);
         res.send({
           message: "Error in updating product",
           status: "failed",
@@ -102,6 +113,7 @@ class baseController {
     let itm = this.req_item;
     this.paths.forEach(function (path) {
       if (itm[path]) {
+        console.log(itm[path]);
         object[path] = itm[path];
       }
     });

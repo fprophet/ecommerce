@@ -75,9 +75,10 @@ function initEvents() {
 function getFormValues(form) {
   let item = {};
 
-  const inputs = $("input[type=text],textarea,select", true);
+  const inputs = $("input[type=text],input[type=number],textarea,select", true);
   inputs.forEach(function (elem) {
     if (!elem.value) {
+      console.log(elem);
       throw new Error("Please fill all inputs!");
     }
     item[elem.id] = elem.value;
@@ -97,8 +98,10 @@ function populateForm() {
 }
 
 function startUpdate(id) {
-  edit = id;
-  populateForm();
+  // edit = id;
+  // populateForm();
+
+  replace;
 }
 
 function deleteRequest(id, callback = false) {
@@ -118,13 +121,13 @@ function deleteRequest(id, callback = false) {
     });
 }
 
-function updateReuest(obj, callback = false) {
+function updateReuest(data, callback = false) {
   fetch(API_URL + "update", {
     method: "PUT",
+    body: data,
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "application/x-www-form-urlencoded",
     },
-    body: JSON.stringify(obj),
   })
     .then((response) => response.json())
     .then((data) => {
@@ -175,6 +178,21 @@ function displayProducts(products) {
   console.log(products);
 }
 
+function displayProduct(product) {
+  product = product.replaceAll("&#34;", '"');
+  product = product.replaceAll("\n", "<br>");
+
+  const json = JSON.parse(product);
+  edit = json["_id"];
+  $("#prod-id").dataset.id = json["_id"];
+  for (const prop in json) {
+    const elem = $("#" + prop);
+    if (elem) {
+      elem.value = json[prop];
+    }
+  }
+}
+
 async function getCategoryProducts(id) {
   fetchCategoryProducts(id)
     .then((res) => res.json())
@@ -217,6 +235,9 @@ function _handleObjButtonClick(event) {
 
 function getFormData() {
   const json = getFormValues($(`#${index}-form`));
+  if (edit) {
+    json.id = edit;
+  }
   const data = new FormData();
   data.append("item", JSON.stringify(json));
   return data;
@@ -224,13 +245,13 @@ function getFormData() {
 
 function _handleSubmitForm(event) {
   event.preventDefault();
+  let data;
   try {
-    const data = getFormData();
+    data = getFormData();
   } catch (err) {
     set_alert(false, err.message, "failed");
     return false;
   }
-
   if (index == "products") {
     const images = $("input[type=file]").files;
     if (images && images.length > 0) {
@@ -239,8 +260,10 @@ function _handleSubmitForm(event) {
       }
     }
   }
+
+  console.log(data.get("item"));
+  // return false;
   if (edit) {
-    data.id = edit;
     updateReuest(data, set_alert);
   } else {
     createRequest(data, set_alert);

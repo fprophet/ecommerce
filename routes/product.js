@@ -18,7 +18,7 @@ router.get(
 router.get(
   "/add",
   adminController.authorizeUser,
-  productController.getFormView
+  productController.getProductView
 );
 
 router.get("/:product", productController.getProductAndRender);

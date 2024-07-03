@@ -18,7 +18,12 @@ module.exports = (controller) => {
     controller.parseRequestItem,
     controller.create
   );
-  router.put("/update", controller.parseRequestItem, controller.update);
+  router.put(
+    "/update",
+    upload.any(),
+    controller.parseRequestItem,
+    controller.update
+  );
   router.get("/get", controller.get);
   router.delete("/delete", controller.delete);
 

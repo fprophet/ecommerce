@@ -1,55 +1,113 @@
 <%- contentFor("section")%>
-
-<h1><%= product.name%></h1>
-<div class="product-main-wrapper">
-  <div id="upate-poduct-form" class="form-holder">
-    <div class="form-group">
-      <label for="name">Name:</label>
-      <span class="form-val" id="name"><%= product.name%></span>
-    </div>
-    <div class="form-group">
-      <label for="description">Description:</label>
-      <span class="form-val" id="description"><%= product.description %></span>
-    </div>
-    <div class="form-group">
-      <label for="quantity">In stock:</label>
-      <span id="quantity"><%= product.quantity %></span>
-    </div>
-    <div class="product-img-display">
-      <div class="main-img-wrapper">
-        <div class="left-arr-holder arr-holder" data-dir="left">
-          <i class="fa-solid fa-angle-left"></i>
+<h2>Add/Update Products</h2>
+<div id="add-prod-wrapper">
+  <input type="range" hidden id="prod-id" />
+  <form id="products-form" method="POST">
+    <div class="form-box" id="product-info">
+      <div class="form-box-header">
+        <h2>Product Information</h2>
+      </div>
+      <div class="form-box-body">
+        <div class="input-group">
+          <label for="name">Product Name</label>
+          <input required type="text" name="name" id="name" />
         </div>
-        <div class="img-display">
-          <% if(product.images && product.images.length > 0){ %> <img
-          src="/images/products/<%= product.id + "/" + product.images[0]%>"
-          alt="" width="800" height="250" id="main-display" data-id="0" /> <%
-          }else{ %>
-          <span>No images</span>
-          <% } %>
+        <!-- <div class="input-group">
+          <label for="quantity">Quantity</label>
+          <input required type="text" name="quantity" id="quantity" />
+        </div> -->
+        <div class="input-group">
+          <label for="category">Category</label>
+          <select required type="text" name="category" id="category">
+            <% categories.forEach(function(category){%>
+            <option value="<%=category.id%>"><%=category.name%></option>
+            <%})%>
+          </select>
         </div>
-        <div class="right-arr-holder arr-holder" data-dir="right">
-          <i class="fa-solid fa-chevron-right"></i>
+        <div class="input-group">
+          <label for="description">Description</label>
+          <textarea
+            required
+            type="text"
+            name="description"
+            id="description"
+          ></textarea>
         </div>
       </div>
-      <div class="img-collection-wrapper">
-        <% if(product.images && product.images.length> 0){ %> <%
-        product.images.forEach(function(img){%>
-        <div class="img-holder selected">
-          <img data-id="0" src="/images/products/<%= product.id + "/" + img%>"
+    </div>
+    <div class="form-box" id="product-pricing">
+      <div class="form-box-header">
+        <h2>Pricing & Quantity</h2>
+      </div>
+      <div class="form-box-body">
+        <div class="input-group-wrapper">
+          <div class="input-group">
+            <label for="price">Price</label>
+            <input type="number" name="price" id="price" />
+          </div>
+          <div class="input-group">
+            <label for="currency">Currency</label>
+            <select type="number" name="currency" id="currency">
+              <option value="ron">RON</option>
+              <option value="eur">EUR</option>
+              <option value="usd">USD</option>
+            </select>
+          </div>
+        </div>
+        <div class="input-group">
+          <label for="quantity">Quantity</label>
+          <input type="number" name="quantity" id="quantity" />
+        </div>
+      </div>
+    </div>
+    <div class="form-box" id="media">
+      <div class="form-box-header">
+        <h2>Media</h2>
+      </div>
+      <div class="form-box-body">
+        <div class="input-group">
+          <!-- <label for="images">Choose Images Images</label> -->
+          <input
+            type="file"
+            name="images"
+            multiple="multiple"
+            id="add-prod-images"
           />
         </div>
-        <% })%> <% }; %>
+        <div class="product-img-display">
+          <div class="main-img-wrapper">
+            <div class="left-arr-holder arr-holder" data-dir="left">
+              <i class="fa-solid fa-angle-left"></i>
+            </div>
+            <div class="img-display">
+              <img
+                src=""
+                alt=""
+                width="800"
+                height="250"
+                id="main-display"
+                data-id=""
+              />
+            </div>
+            <div class="right-arr-holder arr-holder" data-dir="right">
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+          </div>
+          <div class="img-collection-wrapper"></div>
+        </div>
       </div>
     </div>
-  </div>
-  <div id="product-menu-wrapper" data-id="<%= product.id%>">
-    <div id="product-menu">
-      <div>
-        <button id="update">Add Images</button>
-        <button id="update">Start update</button>
-      </div>
-      <button class="products-button" id="delete">DELETE Product ❌</button>
+
+    <div>
+      <button type="submit" id="submit-form" value="">Save product 💾</button>
+      <!-- <button id="cancel-edit" value="">Cancel Edit ❌</button> -->
     </div>
-  </div>
+    <!-- <div id="pricing-data"></div> -->
+  </form>
 </div>
+
+<% if (typeof(product) !== "undefined") {%> <%- contentFor("js")%>
+<script>
+  displayProduct("<%=JSON.stringify(product)%>");
+</script>
+<% } %>

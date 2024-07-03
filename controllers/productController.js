@@ -25,9 +25,13 @@ class productController extends baseController {
   };
 
   getProductAndRender = async (req, res) => {
+    const categories = await Category.find({});
     const product = await this.model.findOne({ name: req.params["product"] });
     if (product) {
-      res.render("../views/admin/product/product", { product: product });
+      res.render("../views/admin/product/product", {
+        product: product,
+        categories: categories,
+      });
     }
   };
 
@@ -43,9 +47,9 @@ class productController extends baseController {
     });
   };
 
-  getFormView = async (req, res) => {
+  getProductView = async (req, res) => {
     const categories = await Category.find({});
-    res.render("../views/admin/product/add", { categories: categories });
+    res.render("../views/admin/product/product", { categories: categories });
   };
 }
 

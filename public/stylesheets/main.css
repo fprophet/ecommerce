@@ -8,7 +8,6 @@ body {
   min-height: 100%;
   margin: 0;
   font-family: "Jura", sans-serif;
-  overflow-x: hidden;
 }
 header {
   flex: 1;
@@ -38,10 +37,14 @@ header ul li {
 #main-section {
   flex: 1;
   /* padding: 0 100px; */
-  width: 1600px;
-  margin: auto;
-  /* display: flex; */
+  /* width: 1600px; */
+  /* margin: auto; */
+  display: flex;
   /* flex-wrap: wrap; */
+}
+#content {
+  width: 100%;
+  padding: 10px 20px;
 }
 #products-list {
   display: flex;
@@ -67,10 +70,24 @@ header ul li {
   flex-direction: column;
   margin: 10px 0;
 }
-.input-group input,
-.input-group select {
-  max-width: 300px;
+.input-group-wrapper {
+  display: flex;
+  flex: 1;
 }
+.input-group label {
+  font-size: 18px;
+}
+.input-group input[type="text"],
+.input-group input[type="number"],
+.input-group select,
+.input-group textarea {
+  /* max-width: 300px; */
+  padding: 10px;
+  font-size: 18px;
+  border: 0.1rem solid #c9cace;
+  border-radius: 5px;
+}
+
 #categories-list {
   display: flex;
   flex-wrap: wrap;
@@ -102,7 +119,39 @@ header ul li {
   display: flex;
 }
 #products-form {
-  flex: 1;
+  /* flex: 1; */
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+}
+.form-box {
+  box-shadow: 0px 0px 5px -1px rgba(0, 0, 0, 0.6);
+  border-radius: 5px;
+  margin: 30px 0;
+}
+.form-box-header {
+  padding: 5px 10px;
+  border-bottom: 0.1rem solid #c9cace;
+}
+.form-box-body {
+  padding: 5px 10px;
+}
+#product-pricing .form-box-body {
+  display: flex;
+}
+#submit-form {
+  padding: 10px;
+  font-size: 18px;
+  background-color: white;
+  border: 1px solid green;
+  border-radius: 5px;
+  color: green;
+  cursor: pointer;
+  transition: 0.3s;
+}
+#submit-form:hover {
+  box-shadow: 0px 0px 3px 1px green;
 }
 .product-img-display {
   flex: 1;
@@ -192,7 +241,7 @@ header ul li {
   height: 50px;
   /* box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.4); */
   border: 1px solid rgba(0, 0, 0, 0.2);
-  position: absolute;
+  position: fixed;
   background-color: white;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
@@ -241,6 +290,13 @@ header ul li {
     right: -512px;
     /* transform: translateX(-10%); */
   }
+}
+#dashboard-menu {
+  position: sticky;
+  top: 0;
+  width: 300px;
+  height: 100vh;
+  border-right: 1px solid rgba(0, 0, 0, 0.4);
 }
 
 footer {
