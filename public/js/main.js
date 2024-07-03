@@ -1,7 +1,7 @@
 let index = getCurrentIndex();
 let API_URL = getCurrentAPI();
 let edit = false;
-
+let alert_timeout;
 function getCurrentAPI() {
   return "http://localhost:3000/admin/" + index + "/";
 }
@@ -65,14 +65,21 @@ function initEvents() {
       arr.addEventListener("click", _handleClickDisplayImage);
     });
   }
+
+  const close_alert = $(".alert-box-close");
+  if (close_alert) {
+    close_alert.addEventListener("click", _handleCloseAlert);
+  }
 }
 
 function getFormValues(form) {
   let item = {};
 
   const inputs = $("input[type=text],textarea,select", true);
-  console.log(inputs);
   inputs.forEach(function (elem) {
+    if (!elem.value) {
+      throw new Error("Please fill all inputs!");
+    }
     item[elem.id] = elem.value;
   });
 
@@ -131,14 +138,13 @@ function updateReuest(obj, callback = false) {
 function createRequest(data, callback = false) {
   fetch(API_URL + "create", {
     method: "POST",
-
     body: data,
   })
     .then((response) => response.json())
     .then((data) => {
       console.log(data.message);
       if (callback) {
-        callback();
+        callback(data);
       }
     });
 }
@@ -181,12 +187,24 @@ async function getCategoryProducts(id) {
     });
 }
 
+function deleteRequestCB() {
+  const new_location = "/admin/products/";
+  window.location.href = new_location;
+}
+
+function _handleCloseAlert(ev) {
+  ev.target.parentElement.style.display = "none";
+  ev.target.parentElement.classList.remove("alert-slide-in");
+  ev.target.parentElement.classList.remove("alert-slide-out");
+  clearTimeout(alert_timeout);
+}
+
 function _handleObjButtonClick(event) {
   const action = event.target.id;
   const obj_id = event.target.parentElement.parentElement.dataset.id;
   switch (action) {
     case "delete":
-      deleteRequest(obj_id);
+      deleteRequest(obj_id, deleteRequestCB);
       break;
     case "update":
       startUpdate(obj_id);
@@ -206,8 +224,13 @@ function getFormData() {
 
 function _handleSubmitForm(event) {
   event.preventDefault();
+  try {
+    const data = getFormData();
+  } catch (err) {
+    set_alert(false, err.message, "failed");
+    return false;
+  }
 
-  const data = getFormData();
   if (index == "products") {
     const images = $("input[type=file]").files;
     if (images && images.length > 0) {
@@ -218,9 +241,9 @@ function _handleSubmitForm(event) {
   }
   if (edit) {
     data.id = edit;
-    updateReuest(data, updateCallback);
+    updateReuest(data, set_alert);
   } else {
-    createRequest(data);
+    createRequest(data, set_alert);
   }
 }
 
@@ -269,6 +292,33 @@ function _handleClickDisplayImage(event) {
       main.dataset.id = idx;
     }
   }
+}
+
+async function set_alert(data = false, message = false, type = false) {
+  if (data) {
+    message = data["message"];
+    type = data["status"];
+  }
+  const alert_modal = $(".alert-box");
+  alert_modal.style.display = "flex";
+  alert_modal.classList.remove("alert-slide-in");
+  alert_modal.classList.remove("alert-slide-out");
+  alert_modal.classList.remove("alert-success");
+  alert_modal.classList.remove("alert-failed");
+
+  alert_modal.classList.add("alert-" + type);
+
+  const message_span = alert_modal.querySelector("span");
+
+  message_span.innerHTML = message;
+  // alert_modal.style.display = "block";
+  alert_modal.classList.add("alert-slide-in");
+
+  //checking for style in case the close button was clicked
+  alert_timeout = setTimeout(function () {
+    alert_modal.classList.remove("alert-slide-in");
+    alert_modal.classList.add("alert-slide-out");
+  }, 3000);
 }
 
 function _handleCancelEdit() {

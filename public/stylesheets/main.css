@@ -8,6 +8,7 @@ body {
   min-height: 100%;
   margin: 0;
   font-family: "Jura", sans-serif;
+  overflow-x: hidden;
 }
 header {
   flex: 1;
@@ -178,6 +179,68 @@ header ul li {
 #product-menu {
   display: flex;
   justify-content: space-between;
+}
+.alert-modal {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: none;
+  /* background-color: rgb(0, 0, 0, 0.3); */
+}
+.alert-box {
+  width: 300px;
+  height: 50px;
+  /* box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.4); */
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  position: absolute;
+  background-color: white;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  top: 13%;
+  right: -512px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  padding: 5px;
+}
+.alert-failed {
+  background-color: #ff9696;
+}
+.alert-success {
+  background-color: #c3dac3;
+}
+.alert-box-close {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.alert-slide-in {
+  animation: slide-right-in 0.5s linear 0s 1 normal forwards;
+  animation-fill-mode: forwards;
+}
+.alert-slide-out {
+  animation: slide-right-out 0.5s linear 0s 1 normal forwards;
+  animation-fill-mode: forwards;
+}
+
+@keyframes slide-right-in {
+  from {
+    right: -512px;
+  }
+  to {
+    right: 0%;
+    /* transform: translateX(-10%); */
+  }
+}
+@keyframes slide-right-out {
+  from {
+    right: 0%;
+  }
+  to {
+    right: -512px;
+    /* transform: translateX(-10%); */
+  }
 }
 
 footer {
