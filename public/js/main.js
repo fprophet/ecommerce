@@ -36,7 +36,6 @@ function $create(tag, id = false, cls = false, text = false) {
 
 function initEvents() {
   const obj_buttons = $(`.${index}-button`, true);
-  console.log(obj_buttons);
   if (obj_buttons) {
     obj_buttons.forEach(function (button) {
       button.addEventListener("click", _handleObjButtonClick);
@@ -81,6 +80,11 @@ function initEvents() {
   const close_prod_modal = $(".close-prod-modal");
   if (close_prod_modal) {
     close_prod_modal.addEventListener("click", _handleCloseProdModal);
+  }
+
+  const remove_prod = $("#remove-product");
+  if (remove_prod) {
+    remove_prod.addEventListener("click", _handleRemoveProd);
   }
 }
 
@@ -258,6 +262,12 @@ function _handleImageBtn(ev) {
       holder.classList.add("to-remove");
     }
   }
+}
+
+function _handleRemoveProd(ev) {
+  ev.preventDefault();
+  const id = $("#prod-id").dataset.id;
+  deleteRequest(id, deleteRequestCB);
 }
 
 function _handleObjButtonClick(event) {

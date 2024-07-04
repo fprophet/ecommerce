@@ -102,8 +102,11 @@
       </div>
     </div>
 
-    <div>
+    <div class="product-buttons">
       <button type="submit" id="submit-form" value="">Save product 💾</button>
+      <% if (typeof(product) !== "undefined") {%>
+      <button id="remove-product">REMOVE Product</button>
+      <% }%>
     </div>
   </form>
 </div>

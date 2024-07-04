@@ -43,11 +43,9 @@ ProductSchema.pre("remove", async function (next) {
 });
 
 ProductSchema.pre("deleteOne", async function (next) {
-  // const category = await mongoose
-  //   .model("Category")
-  //   .find({ products: this.getQuery()._id });
+  const folder = "./public/images/products/" + this.getQuery()._id;
+  fs.rmSync(folder, { recursive: true, force: true });
 
-  // console.log(category);
   await mongoose
     .model("Category")
     .updateOne(
