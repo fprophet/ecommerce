@@ -69,6 +69,7 @@ ProductSchema.pre("save", async function (next) {
       });
     });
   }
+
   await this.model("Category").findByIdAndUpdate(
     { _id: this.category },
     { $push: { products: this._id } },
@@ -78,6 +79,36 @@ ProductSchema.pre("save", async function (next) {
 
 ProductSchema.pre("findOneAndUpdate", async function (next) {
   const product = await this.model.findOne(this.getQuery());
+
+  //check if new files were added or old files were removed
+  const new_images = this.getUpdate().$set.images;
+  let to_remove = product.images.filter(
+    (element) => !new_images.includes(element)
+  );
+  let to_add = new_images.filter(
+    (element) => !product.images.includes(element)
+  );
+  let path = "./public/images/products/" + product._id;
+  if (!fs.existsSync(path)) {
+    fs.mkdir(path, function (err) {
+      if (err) throw err;
+    });
+  }
+  //new files were added
+  to_add.forEach(function (img) {
+    fs.rename("./uploads/" + img, path + "/" + img, function (err) {
+      if (err) throw err;
+    });
+  });
+
+  //files were removed
+  to_remove.forEach(function (img) {
+    if (fs.existsSync(path + "/" + img)) {
+      fs.unlink(path + "/" + img, (err) => {
+        if (err) throw err;
+      });
+    }
+  });
 
   //get the new category id
   const update_category_id = this.getUpdate().$set.category;

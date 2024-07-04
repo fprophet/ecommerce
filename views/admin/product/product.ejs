@@ -65,47 +65,52 @@
         <h2>Media</h2>
       </div>
       <div class="form-box-body">
+        <div class="product-img-display">
+          <% if( typeof(product) !== "undefined" && product.images.length > 0 ){
+          %> <% product.images.forEach(function(img){ %>
+
+          <div class="product-img-wrapper">
+            <div class="product-img-holder">
+              <img src="/images/products/<%= product.id + "/" + img%>" alt="">
+            </div>
+            <div class="product-img-menu">
+              <i class="fa-solid fa-eye img-btn" data-type="prev"></i>
+              <i class="fa-regular fa-trash-can img-btn" data-type="delete"></i>
+            </div>
+          </div>
+
+          <% }) %> <% } else { %>
+          <span class="no-images"> No Images</span>
+          <% }%>
+        </div>
         <div class="input-group">
-          <!-- <label for="images">Choose Images Images</label> -->
+          <label for="add-prod-images" class="prod-img-label">
+            <span>Click to upload files</span>
+            <i class="fa-solid fa-cloud-arrow-up"></i>
+          </label>
           <input
+            hidden
             type="file"
             name="images"
             multiple="multiple"
             id="add-prod-images"
           />
         </div>
-        <div class="product-img-display">
-          <div class="main-img-wrapper">
-            <div class="left-arr-holder arr-holder" data-dir="left">
-              <i class="fa-solid fa-angle-left"></i>
-            </div>
-            <div class="img-display">
-              <img
-                src=""
-                alt=""
-                width="800"
-                height="250"
-                id="main-display"
-                data-id=""
-              />
-            </div>
-            <div class="right-arr-holder arr-holder" data-dir="right">
-              <i class="fa-solid fa-chevron-right"></i>
-            </div>
-          </div>
-          <div class="img-collection-wrapper"></div>
+        <div class="selected-images">
+          <span class="selected-imgs">Selected Images </span>
         </div>
       </div>
     </div>
 
     <div>
       <button type="submit" id="submit-form" value="">Save product 💾</button>
-      <!-- <button id="cancel-edit" value="">Cancel Edit ❌</button> -->
     </div>
-    <!-- <div id="pricing-data"></div> -->
   </form>
 </div>
-
+<div class="product-modal">
+  <img id="modal-img" src="" alt="" />
+  <i class="fa-solid fa-circle-xmark close-prod-modal"></i>
+</div>
 <% if (typeof(product) !== "undefined") {%> <%- contentFor("js")%>
 <script>
   displayProduct("<%=JSON.stringify(product)%>");

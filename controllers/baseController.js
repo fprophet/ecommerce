@@ -9,8 +9,6 @@ class baseController {
   req_item = {};
 
   parseRequestItem = async (req, res, next) => {
-    console.log(req.body);
-    console.log("------------");
     if (req.body && req.body.item) {
       this.req_item = JSON.parse(req.body.item);
     }
@@ -18,8 +16,6 @@ class baseController {
   };
 
   create = async (req, res, next) => {
-    console.log(this.req_item);
-
     const found = await this.model.findOne({ name: this.req_item.name });
     if (found) {
       res.send({
@@ -81,12 +77,13 @@ class baseController {
   };
 
   update = async (req, res, next) => {
-    console.log(this.req_item);
+    const obj = this.getRequestObject(req);
+
     this.model
       .findOneAndUpdate(
         { _id: this.req_item.id },
         {
-          $set: this.getRequestObject(req),
+          $set: obj,
         },
         {
           new: true,
@@ -113,7 +110,6 @@ class baseController {
     let itm = this.req_item;
     this.paths.forEach(function (path) {
       if (itm[path]) {
-        console.log(itm[path]);
         object[path] = itm[path];
       }
     });

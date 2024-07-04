@@ -70,6 +70,18 @@ function initEvents() {
   if (close_alert) {
     close_alert.addEventListener("click", _handleCloseAlert);
   }
+
+  const img_btns = $(".img-btn", true);
+  if (img_btns) {
+    img_btns.forEach(function (btn) {
+      btn.addEventListener("click", _handleImageBtn);
+    });
+  }
+
+  const close_prod_modal = $(".close-prod-modal");
+  if (close_prod_modal) {
+    close_prod_modal.addEventListener("click", _handleCloseProdModal);
+  }
 }
 
 function getFormValues(form) {
@@ -84,6 +96,21 @@ function getFormValues(form) {
     item[elem.id] = elem.value;
   });
 
+  const imgs = $(".product-img-holder img", true);
+  item["images"] = [];
+  imgs.forEach(function (img) {
+    if (img.parentElement.classList.contains("to-remove")) {
+      return;
+    }
+    let parts = img.src.split("/");
+    const name = parts[parts.length - 1];
+    item["images"].push(name);
+  });
+
+  const inpt = $("#add-prod-images");
+  for (i = 0; i < inpt.files.length; i++) {
+    item["images"].push(inpt.files[i].name);
+  }
   return item;
 }
 
@@ -125,9 +152,6 @@ function updateReuest(data, callback = false) {
   fetch(API_URL + "update", {
     method: "PUT",
     body: data,
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
   })
     .then((response) => response.json())
     .then((data) => {
@@ -210,11 +234,30 @@ function deleteRequestCB() {
   window.location.href = new_location;
 }
 
+function _handleCloseProdModal() {
+  $(".product-modal").style.display = "none";
+}
+
 function _handleCloseAlert(ev) {
   ev.target.parentElement.style.display = "none";
   ev.target.parentElement.classList.remove("alert-slide-in");
   ev.target.parentElement.classList.remove("alert-slide-out");
   clearTimeout(alert_timeout);
+}
+
+function _handleImageBtn(ev) {
+  if (ev.target.dataset.type == "prev") {
+    $(".product-modal").style.display = "block";
+    const src = ev.target.parentElement.previousElementSibling.children[0].src;
+    $("#modal-img").src = src;
+  } else {
+    const holder = ev.target.parentElement.previousElementSibling;
+    if (holder.classList.contains("to-remove")) {
+      holder.classList.remove("to-remove");
+    } else {
+      holder.classList.add("to-remove");
+    }
+  }
 }
 
 function _handleObjButtonClick(event) {
@@ -261,7 +304,6 @@ function _handleSubmitForm(event) {
     }
   }
 
-  console.log(data.get("item"));
   // return false;
   if (edit) {
     updateReuest(data, set_alert);
@@ -275,23 +317,54 @@ function _handleDisplayProdImages(event) {
   if (files.length < 1) {
     return false;
   }
-  const collection_holder = $(".img-collection-wrapper");
-
+  const collection_holder = $(".selected-images");
+  collection_holder.style.display = "flex";
   for (i = 0; i <= files.length - 1; i++) {
-    const holder = $create("div", false, ["img-holder"]);
-    const img = $create("img");
+    const holder = $create("div", false, ["selected-image-wrapper"]);
+    const img = $create("img", false, ["selected-img"]);
     img.setAttribute("data-id", i);
     img.src = URL.createObjectURL(files[i]);
 
-    holder.appendChild(img);
-    collection_holder.appendChild(holder);
+    const span = $create("span", false, ["selected-name"]);
+    span.innerHTML = files[i].name;
 
-    if (i == 0) {
-      holder.classList.add("selected");
-      $("#main-display").src = URL.createObjectURL(files[i]);
-      $("#main-display").dataset.id = i;
+    const remove = $create("i", false, [
+      "fa-solid",
+      "fa-xmark",
+      "remove-selected-img",
+    ]);
+    remove.addEventListener("click", _handleRemvoeSelected);
+    holder.appendChild(img);
+    holder.appendChild(span);
+    holder.appendChild(remove);
+    collection_holder.appendChild(holder);
+  }
+}
+
+function _handleRemvoeSelected(ev) {
+  const img = ev.target.parentElement.children[0];
+  const id = img.dataset.id;
+
+  const inpt = $("#add-prod-images");
+
+  const dt = new DataTransfer();
+
+  for (i = 0; i < inpt.files.length; i++) {
+    if (i != id) {
+      dt.items.add(inpt.files[i]);
     }
   }
+  ev.target.parentElement.remove();
+
+  const selected = $(".selected-img", true);
+  let count = 0;
+  selected.forEach(function (sel) {
+    sel.dataset.id = count;
+    count++;
+  });
+
+  inpt.files = dt.files;
+  console.log(inpt.files);
 }
 
 function _handleClickDisplayImage(event) {
