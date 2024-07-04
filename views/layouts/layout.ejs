@@ -27,14 +27,14 @@
     <%- include("../partials/header.ejs") -%>
 
     <section id="main-section">
-      <%- include("../partials/admin-dashboard.ejs") -%>
+      <% if(adminID ){ %> <%- include("../partials/admin-dashboard.ejs") -%> <%
+      } %>
       <div id="content"><%- section %></div>
     </section>
     <div class="alert-box">
       <button class="alert-box-close">X</button>
       <span class="alert-box-message">Here comes the message </span>
     </div>
-
     <%- include("../partials/footer.ejs") -%>
   </body>
 </html>

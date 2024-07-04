@@ -5,6 +5,10 @@ const CategorySchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  description: {
+    type: String,
+    required: true,
+  },
   products: [
     {
       type: mongoose.Types.ObjectId,

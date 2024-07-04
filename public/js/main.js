@@ -100,21 +100,24 @@ function getFormValues(form) {
     item[elem.id] = elem.value;
   });
 
-  const imgs = $(".product-img-holder img", true);
-  item["images"] = [];
-  imgs.forEach(function (img) {
-    if (img.parentElement.classList.contains("to-remove")) {
-      return;
-    }
-    let parts = img.src.split("/");
-    const name = parts[parts.length - 1];
-    item["images"].push(name);
-  });
+  if (index == "products") {
+    const imgs = $(".product-img-holder img", true);
+    item["images"] = [];
+    imgs.forEach(function (img) {
+      if (img.parentElement.classList.contains("to-remove")) {
+        return;
+      }
+      let parts = img.src.split("/");
+      const name = parts[parts.length - 1];
+      item["images"].push(name);
+    });
 
-  const inpt = $("#add-prod-images");
-  for (i = 0; i < inpt.files.length; i++) {
-    item["images"].push(inpt.files[i].name);
+    const inpt = $("#add-prod-images");
+    for (i = 0; i < inpt.files.length; i++) {
+      item["images"].push(inpt.files[i].name);
+    }
   }
+
   return item;
 }
 
@@ -128,11 +131,19 @@ function populateForm() {
   });
 }
 
-function startUpdate(id) {
-  // edit = id;
-  // populateForm();
+function addCancelButton() {
+  const form = $(".categories-form-buttons");
+  const btn = $create("button", "cancel-edit", ["base-btn"]);
+  btn.innerHTML = "Cancel Edit";
+  btn.addEventListener("click", _handleCancelEdit);
+  form.appendChild(btn);
+}
 
-  replace;
+function startUpdate(id) {
+  edit = id;
+  populateForm();
+  addCancelButton();
+  // replace;
 }
 
 function deleteRequest(id, callback = false) {
@@ -266,6 +277,9 @@ function _handleImageBtn(ev) {
 
 function _handleRemoveProd(ev) {
   ev.preventDefault();
+  if (!confirm("Are you sure you want to remove this object?")) {
+    return false;
+  }
   const id = $("#prod-id").dataset.id;
   deleteRequest(id, deleteRequestCB);
 }
@@ -275,6 +289,9 @@ function _handleObjButtonClick(event) {
   const obj_id = event.target.parentElement.parentElement.dataset.id;
   switch (action) {
     case "delete":
+      if (!confirm("Are you sure you want to remove this object?")) {
+        return false;
+      }
       deleteRequest(obj_id, deleteRequestCB);
       break;
     case "update":
@@ -429,6 +446,11 @@ async function set_alert(data = false, message = false, type = false) {
 
 function _handleCancelEdit() {
   edit = false;
+  const inpts = $("input,textarea", true);
+  inpts.forEach(function (elem) {
+    elem.value = "";
+  });
+  $("#cancel-edit").remove();
 }
 
 initEvents();

@@ -1,29 +1,52 @@
 <%- contentFor("section")%> <%- contentFor("section") %>
 
 <h1>THIS IS CATEGORIES VIEW</h1>
-<div id="categories-list">
-  <% categories.forEach(function(category){%>
-  <div class="category-holder" data-id="<%= category.id%>">
-    <div>
-      <span class="category-holder-span">
-        <span class="categories-name" data-target="name"
-          ><%= category.name%></span
-        >
-      </span>
+<div class="categories-wrapper">
+  <div id="categories-list">
+    <% categories.forEach(function(category){%>
+    <div class="category-holder" data-id="<%= category.id%>">
+      <div>
+        <div class="category-span-holder">
+          <span>Category name:</span>
+          <span class="category-name" data-target="name"
+            ><%= category.name%></span
+          >
+        </div>
+        <div class="category-span-holder">
+          <span>Category description:</span>
+          <span class="category-description" data-target="description"
+            ><%= category.description%></span
+          >
+        </div>
+      </div>
+      <div class="categories-btns-holder">
+        <button class="categories-button base-btn" id="update">Edit</button>
+        <button class="categories-button base-btn" id="delete">
+          DELETE Category
+        </button>
+      </div>
     </div>
-    <div>
-      <button class="categories-button" id="update">💾</button>
-      <button class="categories-button" id="delete">❌</button>
-      <button class="categories-button" id="get-products">Show products</button>
-    </div>
-  </div>
 
-  <%}) %>
-</div>
-<form action="/categories/create" method="POST">
-  <div class="input-group">
-    <label for="name">Category Name</label>
-    <input required type="text" name="name" id="name" />
+    <%}) %>
   </div>
-  <button type="submit" id="submit-form" value="">Save Category</button>
-</form>
+  <div class="category-form-holder">
+    <div class="categories-form">
+      <div class="input-group">
+        <label for="name">Category Name</label>
+        <input required type="text" name="name" id="name" />
+      </div>
+      <div class="input-group">
+        <label for="name">Category Description</label>
+        <textarea
+          required
+          type="text"
+          name="description"
+          id="description"
+        ></textarea>
+      </div>
+      <div class="categories-form-buttons">
+        <button type="submit" id="submit-form" value="">Save Category</button>
+      </div>
+    </div>
+  </div>
+</div>

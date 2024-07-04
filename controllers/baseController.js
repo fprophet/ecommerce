@@ -78,7 +78,8 @@ class baseController {
 
   update = async (req, res, next) => {
     const obj = this.getRequestObject(req);
-
+    const object_name = this.name;
+    console.log(obj);
     this.model
       .findOneAndUpdate(
         { _id: this.req_item.id },
@@ -91,14 +92,14 @@ class baseController {
       )
       .then(function (response) {
         res.send({
-          message: "Product updated",
+          message: object_name + " updated",
           status: "success",
         });
       })
       .catch(function (err) {
         console.log(err.message);
         res.send({
-          message: "Error in updating product",
+          message: "Error in updating " + object_name,
           status: "failed",
         });
         return next();

@@ -87,15 +87,42 @@ header ul li {
   border: 0.1rem solid #c9cace;
   border-radius: 5px;
 }
-
+.categories-wrapper {
+  display: flex;
+}
+.category-form-holder {
+  flex: 1;
+  border-left: 1px solid rgba(0, 0, 0, 0.3);
+  padding: 0 10px;
+}
+.categories-form-buttons {
+  display: flex;
+  justify-content: space-between;
+}
 #categories-list {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  /* flex-wrap: wrap; */
+  flex: 2;
+}
+.category-span-holder {
+  margin: 10px 0;
+}
+.category-span-holder span {
+  /* display: block; */
+  font-size: 20px;
+}
+.category-span-holder .category-name {
+  /* font-size: 23px; */
+}
+.category-span-holder .category-description {
+  display: block;
 }
 .category-holder {
-  width: 25%;
+  /* width: 25%; */
   padding: 10px;
   margin: 10px;
+  box-shadow: 0px 0px 5px -1px rgba(0, 0, 0, 0.4);
 }
 #products-wrapper {
   display: flex;
@@ -150,6 +177,36 @@ header ul li {
   cursor: pointer;
   transition: 0.3s;
 }
+.base-btn {
+  font-size: 17px;
+  padding: 10px 20px;
+  background-color: white;
+  border-radius: 5px;
+  border: 1px solid;
+  cursor: pointer;
+}
+.categories-btns-holder {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid rgba(0, 0, 0, 0.3);
+  padding: 10px 0;
+}
+.categories-button#update {
+  color: green;
+  border-color: green;
+}
+.categories-button#update:hover {
+  box-shadow: 0px 0px 3px 1px green;
+}
+.categories-button#delete:hover {
+  box-shadow: 0px 0px 3px 1px red;
+}
+.categories-button#delete {
+  color: red;
+  border-color: red;
+  font-size: 15px;
+}
+
 #remove-product {
   background-color: white;
   border: 1px solid red;

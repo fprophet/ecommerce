@@ -31,6 +31,7 @@ app.use(
 );
 
 app.use(function (req, res, next) {
+  // console.log(req.session.cookie.adminID)
   res.locals.adminID = req.session.adminID;
   next();
 });

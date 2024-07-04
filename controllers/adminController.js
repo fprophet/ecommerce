@@ -90,14 +90,13 @@ class adminController extends baseController {
       { adminID: this.model._id, role: this.model.role },
       "secretKey"
     );
-    res.cookie("SessionID", token);
+    res.cookie("SessionID", token, { maxAge: 14400000 });
     res.redirect("/admin");
     // res.status(200).json({ token });
     // res.send();
   };
 
   comparePassword = async function (password) {
-    console.log(password);
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
