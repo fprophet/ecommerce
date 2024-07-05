@@ -75,19 +75,19 @@ class adminController extends baseController {
   loginRequest = async (req, res, next) => {
     res.clearCookie("SessionID");
     const { username, password } = req.body;
-    this.model = await this.model.findOne({ username: username });
-    if (!this.model) {
+    const found = await this.model.findOne({ username: username });
+    if (!found) {
       return res.status(400).json({ error: "Invalid username or password" });
     }
 
-    // console.log(this.model);
-    const passMatch = await bcrypt.compare(password, this.model.password);
+    // console.log(found.model);
+    const passMatch = await bcrypt.compare(password, found.password);
     if (!passMatch) {
       return res.status(400).json({ error: "Invalid username or password" });
     }
 
     const token = jwt.sign(
-      { adminID: this.model._id, role: this.model.role },
+      { adminID: found._id, role: found.role },
       "secretKey"
     );
     res.cookie("SessionID", token, { maxAge: 14400000 });
