@@ -118,7 +118,9 @@ class baseController {
   };
 
   getMainView = (req, res, next) => {
-    res.render("../views/" + this.name.toLocaleLowerCase() + "/index");
+    res.render("../views/" + this.name.toLocaleLowerCase() + "/index", {
+      layout: "layouts/admin",
+    });
     next();
   };
 }

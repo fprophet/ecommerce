@@ -11,7 +11,10 @@ class categoryController extends baseController {
 
   getMainAdminView = async (req, res) => {
     const categories = await this.model.find({});
-    res.render("../views/admin/category/index", { categories: categories });
+    res.render("../views/admin/category/index", {
+      layout: "layouts/admin",
+      categories: categories,
+    });
   };
 
   getProductsForCategory = async (req, res, next) => {

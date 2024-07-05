@@ -9,9 +9,13 @@ var session = require("express-session");
 var path = require("path");
 app.use(express.static(path.join(__dirname, "/public")));
 
-const productRouter = require("./routes/product");
-const categoryRouter = require("./routes/category");
-const adminRouter = require("./routes/admin");
+//admin routers
+const adminProductRouter = require("./routes/admin/product");
+const adminCategoryRouter = require("./routes/admin/category");
+const adminRouter = require("./routes/admin/admin");
+
+//public routers
+const mainRouter = require("./routes/main.js");
 
 var expressLayouts = require("express-ejs-layouts");
 
@@ -41,13 +45,13 @@ app.set("view engine", "ejs");
 app.set("layout", "layouts/layout");
 app.use(expressLayouts);
 
-app.get("/", function (req, res) {
-  res.render("index");
-});
-
-app.use("/admin/products", productRouter);
-app.use("/admin/categories", categoryRouter);
+//admin routing
+app.use("/admin/products", adminProductRouter);
+app.use("/admin/categories", adminCategoryRouter);
 app.use("/admin", adminRouter);
+
+//public routing
+app.use("/", mainRouter);
 
 app.listen(3000, function () {
   console.log("listening on port 3000");

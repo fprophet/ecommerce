@@ -1,5 +1,5 @@
-const categoryController = require("../controllers/categoryController");
-const adminController = require("../controllers/adminController");
+const categoryController = require("../../controllers/categoryController");
+const adminController = require("../../controllers/adminController");
 
 const router = require("./baseRouter")(categoryController);
 

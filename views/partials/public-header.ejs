@@ -1,0 +1,14 @@
+<header>
+  <span id="logo"> <a href="/"> Ecommerce </a></span>
+  <ul>
+    <li><a href="#">Cart</a></li>
+    <li>
+      <% if(adminID ){ %>
+      <a href="/admin">Admin</a>
+      <a href="/admin/logout">Logout</a>
+      <% } else { %>
+      <a href="/admin/login">Login</a>
+      <% } %>
+    </li>
+  </ul>
+</header>

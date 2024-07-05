@@ -1,5 +1,5 @@
-const productController = require("../controllers/productController");
-const adminController = require("../controllers/adminController");
+const productController = require("../../controllers/productController");
+const adminController = require("../../controllers/adminController");
 
 const router = require("./baseRouter")(productController);
 
@@ -12,14 +12,14 @@ router.get(
 router.get(
   "/category/:category",
   adminController.authorizeUser,
-  productController.getProductsForCategory
+  productController.getAdminProductsForCategory
 );
 
 router.get(
   "/add",
   adminController.authorizeUser,
-  productController.getProductView
+  productController.getAdminProductView
 );
 
-router.get("/:product", productController.getProductAndRender);
+router.get("/:product", productController.getAdminProductAndRender);
 module.exports = router;

@@ -1,4 +1,4 @@
-const controller = require("../controllers/adminController");
+const controller = require("../../controllers/adminController");
 const router = require("./baseRouter")(controller);
 
 router.get("/login", function (req, res, next) {

@@ -21,21 +21,23 @@ class productController extends baseController {
     res.render("../views/admin/product/index", {
       // products: products,
       categories: categories,
+      layout: "layouts/admin",
     });
   };
 
-  getProductAndRender = async (req, res) => {
+  getAdminProductAndRender = async (req, res) => {
     const categories = await Category.find({});
     const product = await this.model.findOne({ name: req.params["product"] });
     if (product) {
       res.render("../views/admin/product/product", {
         product: product,
         categories: categories,
+        layout: "layouts/admin",
       });
     }
   };
 
-  getProductsForCategory = async (req, res) => {
+  getAdminProductsForCategory = async (req, res) => {
     const categories = await Category.find({});
     const products = await this.model.find({
       category: req.params["category"],
@@ -44,12 +46,24 @@ class productController extends baseController {
     res.render("../views/admin/product/index", {
       categories: categories,
       products: products,
+      layout: "layouts/admin",
     });
   };
 
-  getProductView = async (req, res) => {
+  getAdminProductView = async (req, res) => {
     const categories = await Category.find({});
-    res.render("../views/admin/product/product", { categories: categories });
+    res.render("../views/admin/product/product", {
+      categories: categories,
+      layout: "layouts/admin",
+    });
+  };
+
+  getMainView = async (req, res) => {
+    const products = await this.model.find({});
+    res.render("../views/index", {
+      products: products,
+      layout: "layouts/admin",
+    });
   };
 }
 

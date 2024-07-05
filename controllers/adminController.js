@@ -104,7 +104,7 @@ class adminController extends baseController {
   };
 
   loginView = (req, res, next) => {
-    res.render("../views/admin/login");
+    res.render("../views/admin/login", { layout: "layouts/admin" });
   };
 }
 const controller = new adminController();
