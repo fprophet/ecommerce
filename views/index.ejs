@@ -1,2 +1,48 @@
 <%- contentFor('section') %>
 <h1>Ecommerce Website</h1>
+<div class="container">
+  <div class="cards-wrapper">
+    <% products.forEach(function(product){%>
+    <div class="product-card">
+      <div class="p-card-header">
+        <img
+          src="/images/products/<%=product.id%>/<%=product.images[0]%>"
+          alt=""
+          class="product-img"
+        />
+      </div>
+      <div class="p-card-body">
+        <span class="product-name"><%=product.name%></span>
+        <span class="product-category"
+          ><%= helper.findCategById(categories, product.category).name %></span
+        >
+        <div class="product-ratings">
+          <i class="fa-solid fa-star filled"></i>
+          <i class="fa-solid fa-star filled"></i>
+          <i class="fa-solid fa-star filled"></i>
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+          <span class="total-ratings">(25)</span>
+        </div>
+
+        <div class="product-price-wrapper">
+          <span class="price"><%= product.price %></span>
+          <span class="currency"><%= product.currency %></span>
+        </div>
+
+        <div class="product-buttons">
+          <button class="prod-btn add-to-cart">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span> Add To Cart</span>
+          </button>
+          <button class="prod-btn view-details">
+            <i class="fa-regular fa-eye"></i>
+            <span>View Details</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <%})%>
+  </div>
+</div>

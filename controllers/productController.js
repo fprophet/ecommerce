@@ -1,8 +1,8 @@
 const Category = require("../models/category");
 const baseController = require("./baseController");
+var helper = require("../public/functions.js");
 const mongoose = require("mongoose");
 // mongoose.set("debug", true);
-
 class productController extends baseController {
   constructor() {
     super();
@@ -59,10 +59,18 @@ class productController extends baseController {
   };
 
   getMainView = async (req, res) => {
+    // let products = [];
+    // for (let i = 0; i < categories.length; i++) {
+    //   const found = await this.model.findOne({ category: categories[i] });
+    //   products.push(found);
+    // }
+    const categories = await Category.find({});
     const products = await this.model.find({});
     res.render("../views/index", {
       products: products,
-      layout: "layouts/admin",
+      categories: categories,
+      helper: helper,
+      layout: "layouts/public",
     });
   };
 }

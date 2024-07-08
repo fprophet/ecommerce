@@ -22,7 +22,6 @@ class categoryController extends baseController {
       path: "products",
       select: ["name", "quantity"],
     });
-    console.log(category);
     if (!category) {
       res.send({
         message: "Category not found",
