@@ -1,0 +1,56 @@
+<%- contentFor("section")%>
+<div class="container">
+  <div class="product-wrapper">
+    <div class="display-wrapper">
+      <div class="collection-wrapper">
+        <% product.images.forEach(function(img){ %>
+        <div class="collection-img-holder">
+          <img
+            src="/images/products/<%= product.id%>/<%=img%>"
+            class="collection-img"
+            alt=""
+          />
+        </div>
+
+        <% })%>
+      </div>
+      <div class="image-wrapper">
+        <img
+          src="/images/products/<%= product.id%>/<%=product.images[0]%>"
+          alt=""
+          id="product-image"
+        />
+      </div>
+    </div>
+    <div class="details-wrapper">
+      <h1 class="product-name"><%= product.name%></h1>
+      <div class="price-wrapper">
+        <span class="currency"><%= product.currency%></span>
+        <span class="price"><%= product.price%></span>
+      </div>
+      <div class="ratings-wrapper">
+        <span>Rating:</span>
+        <i class="fa-solid fa-star filled"></i>
+        <i class="fa-solid fa-star filled"></i>
+        <i class="fa-solid fa-star filled"></i>
+        <i class="fa-solid fa-star"></i>
+        <i class="fa-solid fa-star"></i>
+        <span>(3)</span>
+        <a href="#"><span class="total-ratings">See all 25 reviews</span></a>
+      </div>
+      <div class="description-wrapper">
+        <p class="product-description"><%= product.description%></p>
+      </div>
+      <div class="product-buttons-wrapper">
+        <div class="count-wrapper">
+          <span class="remove count-control">-</span>
+          <input type="number" name="" id="product-count" value="1" />
+          <span class="add count-control">+</span>
+        </div>
+        <button class="prod-btn add-to-cart">
+          <i class="fa-solid fa-cart-shopping"></i> Add To Cart
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

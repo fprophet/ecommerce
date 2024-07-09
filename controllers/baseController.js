@@ -79,7 +79,6 @@ class baseController {
   update = async (req, res, next) => {
     const obj = this.getRequestObject(req);
     const object_name = this.name;
-    console.log(obj);
     this.model
       .findOneAndUpdate(
         { _id: this.req_item.id },

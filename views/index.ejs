@@ -25,20 +25,27 @@
           <span class="total-ratings">(25)</span>
         </div>
 
-        <div class="product-price-wrapper">
+        <div class="card-price-wrapper">
           <span class="price"><%= product.price %></span>
           <span class="currency"><%= product.currency %></span>
         </div>
 
-        <div class="product-buttons">
+        <div class="card-buttons">
           <button class="prod-btn add-to-cart">
             <i class="fa-solid fa-cart-shopping"></i>
             <span> Add To Cart</span>
           </button>
-          <button class="prod-btn view-details">
+          <% category_link=helper.findCategById(categories,
+          product.category).name;
+          category_link=helper.getCategoryLinkName(category_link); %>
+
+          <a
+            class="prod-btn view-details"
+            href="/<%=category_link%>/<%= product.id%>"
+          >
             <i class="fa-regular fa-eye"></i>
             <span>View Details</span>
-          </button>
+          </a>
         </div>
       </div>
     </div>

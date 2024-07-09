@@ -73,6 +73,17 @@ class productController extends baseController {
       layout: "layouts/public",
     });
   };
+  getProductView = async (req, res) => {
+    const product = await this.model.findById(req.params.product);
+    const more_prods = await this.model.find({ category: product.category });
+    res.render("public/product.ejs", {
+      product: product,
+      category: req.params.category,
+      more: more_prods,
+      helper: helper,
+      layout: "layouts/public",
+    });
+  };
 }
 
 const controller = new productController();

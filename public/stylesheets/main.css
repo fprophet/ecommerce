@@ -44,12 +44,12 @@ header ul li {
 }
 #content {
   width: 100%;
-  padding: 10px 20px;
+  /* padding: 10px 20px; */
 }
 .container {
   max-width: 1300px;
   margin: 0 auto;
-  height: 100%;
+  /* height: 100%; */
 }
 .cards-wrapper {
   display: flex;
@@ -75,7 +75,7 @@ header ul li {
   width: 100%;
   height: 170px;
 }
-.product-name {
+.p-card-body .product-name {
   text-align: center;
   display: block;
   font-size: 20px;
@@ -87,7 +87,7 @@ header ul li {
   display: block;
   text-align: center;
 }
-.product-ratings {
+.p-card-body .product-ratings {
   display: flex;
   justify-content: center;
   padding: 5px;
@@ -96,7 +96,7 @@ header ul li {
 .filled {
   color: orange;
 }
-.product-price-wrapper {
+.card-price-wrapper {
   display: flex;
   justify-content: center;
   margin-top: 10px;
@@ -106,7 +106,7 @@ header ul li {
     text-transform: uppercase;
   }
 }
-.product-buttons {
+.card-buttons {
   margin-top: 10px;
   display: flex;
   justify-content: space-around;
@@ -127,6 +127,111 @@ header ul li {
 }
 .prod-btn.view-details {
   background-color: #aeae66;
+  text-decoration: none;
+}
+.product-wrapper {
+  display: flex;
+  /* height: 100%; */
+}
+.display-wrapper {
+  flex: 1;
+  display: flex;
+  /* flex-direction: column; */
+}
+.details-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  border-left: 1px solid rgba(0, 0, 0, 0.2);
+  padding: 10px;
+}
+.image-wrapper {
+  margin: 0 5px;
+  width: 100%;
+}
+#product-image {
+  width: 100%;
+  height: 500px;
+}
+.collection-wrapper {
+  /* height: 200px; */
+}
+.collection-img-holder {
+  box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.6);
+  margin: 5px 0;
+}
+.collection-img {
+  height: 100px;
+  width: 70px;
+  padding: 5px;
+}
+.product-name {
+  display: block;
+  font-size: 30px;
+  padding: 5px;
+  color: #41b1e8;
+  font-weight: 700;
+  margin: 0;
+  text-align: start;
+  padding: 0;
+}
+.ratings-wrapper {
+  margin-top: 5px;
+}
+.ratings-wrapper span {
+  font-size: 20px;
+}
+.ratings-wrapper .total-ratings {
+  margin-left: 25px;
+}
+.price-wrapper {
+  font-size: 30px;
+  margin: 10px 0;
+}
+.price-wrapper .currency {
+  text-transform: uppercase;
+}
+.product-description {
+  font-size: 20px;
+}
+.product-buttons-wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.count-wrapper {
+  background-color: lightgray;
+  display: flex;
+  align-items: center;
+}
+.count-control {
+  font-size: 40px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+#product-count {
+  width: 70px;
+  font-size: 30px;
+  text-align: center;
+  border: none;
+  background-color: lightgray;
+}
+.more-products-wrapper {
+  margin-top: 20px;
+  background-color: lightgray;
+  display: flex;
+  padding: 10 50px;
+}
+.more-products {
+  font-size: 30px;
+  text-align: center;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }
 footer {
   display: flex;
