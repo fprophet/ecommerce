@@ -58,11 +58,16 @@ header ul li {
 .product-card {
   width: calc(25% - 20px);
   /* background-color: red;  */
-  height: 350px;
+  height: 360px;
   margin: 10px 10px;
   display: flex;
   flex-direction: column;
   box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.3);
+}
+.more-card {
+  margin: 10px 10px;
+  width: calc(20% - 20px);
+  height: 350px;
 }
 .p-card-header {
   flex: 1;
@@ -70,6 +75,7 @@ header ul li {
 .p-card-body {
   flex: 1;
   background-color: #f9f9f9;
+  padding: 10px;
 }
 .product-img {
   width: 100%;
@@ -82,6 +88,9 @@ header ul li {
   padding: 5px;
   color: #41b1e8;
   font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .product-category {
   display: block;
@@ -96,6 +105,14 @@ header ul li {
 .filled {
   color: orange;
 }
+.fa-star {
+  color: orange;
+}
+.fa-star-half-stroke {
+  color: orange;
+  position: relative;
+}
+
 .card-price-wrapper {
   display: flex;
   justify-content: center;
@@ -113,7 +130,7 @@ header ul li {
 }
 .prod-btn {
   padding: 10px;
-  font-size: 18px;
+  font-size: 16px;
   color: white;
   border: 1px solid white;
   cursor: pointer;
@@ -194,6 +211,7 @@ header ul li {
 }
 .product-description {
   font-size: 20px;
+  line-height: 30px;
 }
 .product-buttons-wrapper {
   display: flex;
@@ -219,8 +237,9 @@ header ul li {
 }
 .more-products-wrapper {
   margin-top: 20px;
-  background-color: lightgray;
+  background-color: #eeeeee;
   display: flex;
+  justify-content: center;
   padding: 10 50px;
 }
 .more-products {
@@ -232,6 +251,55 @@ input::-webkit-inner-spin-button {
   /* display: none; <- Crashes Chrome on hover */
   -webkit-appearance: none;
   margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+.input-group {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0;
+}
+.input-group label {
+  font-size: 20px;
+}
+input,
+select,
+textarea {
+  padding: 10px;
+  font-size: 18px;
+  border: 0.1rem solid #c9cace;
+  border-radius: 5px;
+}
+.reviews {
+  font-size: 30px;
+}
+.reviews-section {
+  padding: 20px 0;
+}
+.reviews-section input {
+  max-width: 500px;
+}
+.reviews-section textarea {
+  max-width: 1000px;
+}
+.review-rate {
+  font-size: 35px;
+  position: relative;
+}
+.post-review {
+  max-width: 300px;
+  background-color: #61b161;
+}
+.review-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  font-size: 22px;
+}
+.review-rating {
+  margin-top: 10px;
+  width: 100%;
+}
+.review-content {
+  font-size: 18px;
 }
 footer {
   display: flex;

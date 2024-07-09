@@ -54,3 +54,165 @@
     </div>
   </div>
 </div>
+<h3 class="more-products">More <%=category%> products</h3>
+<div class="more-products-wrapper">
+  <% more.forEach(function(prod){ %>
+  <div class="more-card">
+    <div class="p-card-header">
+      <img
+        src="/images/products/<%=prod.id%>/<%=prod.images[0]%>"
+        alt=""
+        class="product-img"
+      />
+    </div>
+    <div class="p-card-body">
+      <span class="product-name"><%=prod.name%></span>
+      <span class="product-category"><%= category %></span>
+      <div class="product-ratings">
+        <i class="fa-solid fa-star filled"></i>
+        <i class="fa-solid fa-star filled"></i>
+        <i class="fa-solid fa-star filled"></i>
+        <i class="fa-solid fa-star"></i>
+        <i class="fa-solid fa-star"></i>
+        <span class="total-ratings">(25)</span>
+      </div>
+
+      <div class="card-price-wrapper">
+        <span class="price"><%= prod.price %></span>
+        <span class="currency"><%= prod.currency %></span>
+      </div>
+
+      <div class="card-buttons">
+        <button class="prod-btn add-to-cart">
+          <i class="fa-solid fa-cart-shopping"></i>
+          <span> Add To Cart</span>
+        </button>
+        <a class="prod-btn view-details" href="/<%= category %>/<%= prod.id%>">
+          <i class="fa-regular fa-eye"></i>
+          <span>View Details</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <%})%>
+</div>
+<div class="container reviews-section">
+  <h3 class="reviews">Leave Your Review</h3>
+  <div class="review-rate">
+    <i class="fa-regular fa-star"></i>
+    <i class="fa-regular fa-star"></i>
+    <i class="fa-regular fa-star"></i>
+    <i class="fa-regular fa-star"></i>
+    <i class="fa-regular fa-star"></i>
+    <span class="rating-score">Good</span>
+  </div>
+  <div class="review-form">
+    <div class="input-group">
+      <label for="review-name">Your Name</label>
+      <input type="text" name="review-name" id="review-name" />
+    </div>
+    <div class="input-group">
+      <label for="review-name">Your email</label>
+      <input type="email" name="review-email" id="review-email" />
+    </div>
+    <div class="input-group">
+      <label for="review-description">Let us know what you think</label>
+      <textarea
+        name="review-description"
+        cols="10"
+        rows="5"
+        id="review-description"
+      ></textarea>
+    </div>
+    <div class="input-group">
+      <button class="prod-btn post-review">Post Review</button>
+    </div>
+  </div>
+  <h3 class="reviews">What others have said about this product</h3>
+  <div class="reviews-wrapper">
+    <div class="review-wrapper">
+      <div class="review-head">
+        <span class="review-name">Reviewer Name</span>
+        <span class="review-date">12.12.2012</span>
+        <div class="review-rating">
+          <i class="fa-solid fa-star filled"></i>
+          <i class="fa-solid fa-star filled"></i>
+          <i class="fa-solid fa-star filled"></i>
+          <i class="fa-regular fa-star-half-stroke"></i>
+          <i class="fa-regular fa-star"></i>
+        </div>
+      </div>
+      <div class="review-body">
+        <p class="review-content">
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laborum
+          facere architecto asperiores voluptate illo quo a corrupti recusandae
+          aliquid modi aut, quibusdam, quisquam tenetur? Eligendi ut amet hic
+          fuga quae. Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+          Aliquid dicta numquam nobis deserunt vitae labore fuga quod? Ea ullam
+          odio, velit aperiam rem dolorem eveniet quisquam nobis deleniti minus
+          distinctio? Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+          Cumque nihil sunt fugit quis, animi quod harum ad facilis repudiandae,
+          est adipisci quisquam dolores mollitia. Incidunt, a! Odio architecto
+          sequi asperiores.
+        </p>
+      </div>
+    </div>
+    <hr />
+    <div class="review-wrapper">
+      <div class="review-head">
+        <span class="review-name">Reviewer Name</span>
+        <span class="review-date">12.12.2012</span>
+        <div class="review-rating">
+          <i class="fa-solid fa-star filled"></i>
+          <i class="fa-solid fa-star filled"></i>
+          <i class="fa-solid fa-star filled"></i>
+          <i class="fa-regular fa-star-half-stroke"></i>
+          <i class="fa-regular fa-star"></i>
+        </div>
+      </div>
+      <div class="review-body">
+        <p class="review-content">
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laborum
+          facere architecto asperiores voluptate illo quo a corrupti recusandae
+          aliquid modi aut, quibusdam, quisquam tenetur? Eligendi ut amet hic
+          fuga quae. Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+          Aliquid dicta numquam nobis deserunt vitae labore fuga quod? Ea ullam
+          odio, velit aperiam rem dolorem eveniet quisquam nobis deleniti minus
+          distinctio? Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+          Cumque nihil sunt fugit quis, animi quod harum ad facilis repudiandae,
+          est adipisci quisquam dolores mollitia. Incidunt, a! Odio architecto
+          sequi asperiores.
+        </p>
+      </div>
+    </div>
+    <hr />
+    <div class="review-wrapper">
+      <div class="review-head">
+        <span class="review-name">Reviewer Name</span>
+        <span class="review-date">12.12.2012</span>
+        <div class="review-rating">
+          <i class="fa-solid fa-star filled"></i>
+          <i class="fa-solid fa-star filled"></i>
+          <i class="fa-solid fa-star filled"></i>
+          <i class="fa-regular fa-star-half-stroke"></i>
+          <i class="fa-regular fa-star"></i>
+        </div>
+      </div>
+      <div class="review-body">
+        <p class="review-content">
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laborum
+          facere architecto asperiores voluptate illo quo a corrupti recusandae
+          aliquid modi aut, quibusdam, quisquam tenetur? Eligendi ut amet hic
+          fuga quae. Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+          Aliquid dicta numquam nobis deserunt vitae labore fuga quod? Ea ullam
+          odio, velit aperiam rem dolorem eveniet quisquam nobis deleniti minus
+          distinctio? Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+          Cumque nihil sunt fugit quis, animi quod harum ad facilis repudiandae,
+          est adipisci quisquam dolores mollitia. Incidunt, a! Odio architecto
+          sequi asperiores.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
