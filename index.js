@@ -4,6 +4,7 @@ const app = express();
 const mongoose = require("mongoose");
 var session = require("express-session");
 
+var cookieParser = require("cookie-parser");
 // mongoose.connection.close();
 
 var path = require("path");
@@ -16,6 +17,7 @@ const adminRouter = require("./routes/admin/admin");
 
 //public routers
 const mainRouter = require("./routes/main.js");
+const cartRouter = require("./routes/public/cart.js");
 
 var expressLayouts = require("express-ejs-layouts");
 
@@ -23,6 +25,7 @@ mongoose
   .connect("mongodb://127.0.0.1:27017/ecommerce")
   .then(() => console.log("Connected!"));
 
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -52,6 +55,7 @@ app.use("/admin", adminRouter);
 
 //public routing
 app.use("/", mainRouter);
+app.use("/cart", cartRouter);
 
 app.listen(3000, function () {
   console.log("listening on port 3000");

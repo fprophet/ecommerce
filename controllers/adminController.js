@@ -56,11 +56,6 @@ class adminController extends baseController {
 
     req.session.adminID = decoded.adminID;
 
-    // if (sendHeaders) {
-    //   return res.sendStatus(403);
-    // } else {
-    //   return (res.statusCode = 403);
-    // }
     res.status(200);
     next();
   };
@@ -80,7 +75,6 @@ class adminController extends baseController {
       return res.status(400).json({ error: "Invalid username or password" });
     }
 
-    // console.log(found.model);
     const passMatch = await bcrypt.compare(password, found.password);
     if (!passMatch) {
       return res.status(400).json({ error: "Invalid username or password" });
@@ -92,8 +86,6 @@ class adminController extends baseController {
     );
     res.cookie("SessionID", token, { maxAge: 14400000 });
     res.redirect("/admin");
-    // res.status(200).json({ token });
-    // res.send();
   };
 
   comparePassword = async function (password) {

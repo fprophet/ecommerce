@@ -3,7 +3,8 @@
 <div class="container">
   <div class="cards-wrapper">
     <% products.forEach(function(product){%>
-    <div class="product-card">
+    <div class="product-card product">
+      <input type="text" hidden class="product-id" value="<%= product.id%>" />
       <div class="p-card-header">
         <img
           src="/images/products/<%=product.id%>/<%=product.images[0]%>"
