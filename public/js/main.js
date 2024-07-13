@@ -6,6 +6,24 @@ function $(selector, all = false) {
   }
 }
 
+function getFromCookies(selector) {
+  let cookies = document.cookie.split("; ");
+  console.log(cookies);
+  return cookies.find((itm) => itm.split("=")[0] == selector).split("=")[1];
+}
+
+function checkCart() {
+  let cart = getFromCookies("cart");
+  cart = decodeURIComponent(cart);
+  cart = cart.replaceAll("j:", "");
+  cart = JSON.parse(cart);
+  displayCartProducts(cart);
+}
+
+function onlyUnique(value, index, array) {
+  return array.indexOf(value) === index;
+}
+
 function request(url, options, callback = false) {
   fetch(url, options)
     .then((res) => res.json())
@@ -40,4 +58,12 @@ async function _handleAddToCart(event) {
   console.log(id);
 }
 
+function displayCartProducts(cart) {
+  const holder = $(".card-details");
+  for (itm of cart["items"]) {
+    const new = 
+  }
+}
+
 addEvents();
+checkCart();

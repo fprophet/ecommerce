@@ -1,7 +1,6 @@
 <header>
   <span id="logo"> <a href="/"> Ecommerce </a></span>
   <ul>
-    <li><a href="">Cart</a></li>
     <li>
       <% if(adminID ){ %>
       <a href="/admin">Admin</a>
@@ -9,6 +8,35 @@
       <% } else { %>
       <a href="/admin/login">Login</a>
       <% } %>
+    </li>
+
+    <li>
+      <div class="cart-wrapper">
+        <div class="cart-title">
+          <span class="cart-count">0</span>
+          <i class="fa-solid fa-cart-shopping"></i>
+          <span> Cart </span>
+        </div>
+        <div class="cart-details">
+          <!-- <span>No products added!</span> -->
+          <div class="cart-mini-card">
+            <img
+              src="/images/products/66868c55ac185f113d3eaf30/chair1.jpg"
+              class="cart-mini-img"
+              alt=""
+            />
+            <span class="cart-mini-name">wooden chair with iron nails</span>
+            <span class="cart-mini-price">15 RON</span>
+            <div class="mini-cart-count">
+              <span class="mini-count">x2</span>
+            </div>
+
+            <i class="fa-regular fa-trash-can remove-from-cart"></i>
+          </div>
+
+          <button class="view-cart">See Cart Page</button>
+        </div>
+      </div>
     </li>
   </ul>
 </header>

@@ -1,4 +1,5 @@
 const baseController = require("./baseController");
+const Product = require("../models/product");
 
 class cartController extends baseController {
   addToCart = async (req, res, next) => {
@@ -13,6 +14,7 @@ class cartController extends baseController {
     }
 
     if (req.body.product) {
+      const found = await Product.findById(req.body.product);
       cart["items"].push(req.body.product);
     }
 
